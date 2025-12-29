@@ -50,9 +50,7 @@ export const getSessionServer = createServerFn().handler(async () => {
 
 // Check Is Authenticated
 export const checkIsAuthenticatedServer = createServerFn().handler(async () => {
-  const session = await auth.api.getSession({
-    headers: getRequestHeaders(),
-  });
+  const session = await getSessionServer();
   return { isAuthenticated: !!session };
 });
 
