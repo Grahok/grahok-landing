@@ -11,25 +11,29 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles/global.css?url";
 
 import type { QueryClient } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
+import { generateMetadata } from "@/lib/tanstack-meta/generator";
+import { checkIsAuthenticatedServer } from "@/features/auth/actions/server";
 
 interface MyRouterContext {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  loader: async ({ context: { queryClient } }) => {
+    await queryClient.ensureQueryData({
+      queryKey: ["isAuthenticated"],
+      queryFn: checkIsAuthenticatedServer,
+    });
+  },
   head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
+    ...generateMetadata({
+      charSet: "utf-8",
+      viewport: {
+        width: "device-width",
+        initialScale: 1,
       },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "TanStack Start Starter",
-      },
-    ],
+    }),
     links: [
       {
         rel: "stylesheet",
@@ -37,7 +41,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
     ],
   }),
-
   shellComponent: RootDocument,
 });
 
@@ -63,6 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             ]}
           />
         )}
+        <Toaster richColors closeButton />
         <Scripts />
       </body>
     </html>

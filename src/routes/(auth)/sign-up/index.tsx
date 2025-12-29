@@ -1,10 +1,10 @@
-import { SignInForm } from "@/features/auth/components/SignInForm";
+import { SignUpForm } from "@/features/auth/components/SignUpForm";
 import { avoidRedundantAuthMiddleware } from "@/middleware/authMiddleware";
 import { createFileRoute } from "@tanstack/react-router";
 import { generateMetadata } from "tanstack-meta";
 
-export const Route = createFileRoute("/")({
-  head: () => generateMetadata({ title: "Sign In" }),
+export const Route = createFileRoute("/(auth)/sign-up/")({
+  head: () => generateMetadata({ title: "Sign Up" }),
   component: RouteComponent,
   server: {
     middleware: [avoidRedundantAuthMiddleware],
@@ -13,8 +13,8 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <main className="min-h-dvh flex items-center justify-center gap-6">
-      <SignInForm />
+    <main className="min-h-dvh flex items-center justify-center p-6">
+      <SignUpForm />
     </main>
   );
 }
