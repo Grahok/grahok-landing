@@ -4,7 +4,7 @@ import { createMiddleware } from "@tanstack/react-start";
 
 export const protectedMiddleware = createMiddleware().server(
   async ({ next }) => {
-    const isAuthenticated = await checkIsAuthenticatedServer();
+    const { isAuthenticated } = await checkIsAuthenticatedServer();
     if (!isAuthenticated) {
       throw redirect({ to: "/sign-in" });
     }
@@ -15,8 +15,7 @@ export const protectedMiddleware = createMiddleware().server(
 
 export const avoidRedundantAuthMiddleware = createMiddleware().server(
   async ({ next }) => {
-    const isAuthenticated = await checkIsAuthenticatedServer();
-
+    const { isAuthenticated } = await checkIsAuthenticatedServer();
     if (isAuthenticated) {
       throw redirect({ to: "/dashboard" });
     }
