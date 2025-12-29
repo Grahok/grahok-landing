@@ -11,34 +11,23 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles/global.css?url";
 
 import type { QueryClient } from "@tanstack/react-query";
+import { generateMetadata } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
+import { NotFoundPage } from "@/pages/error/not-found";
 
 interface MyRouterContext {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "TanStack Start Starter",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
+  head: () => {
+    const { meta, links } = generateMetadata({});
+
+    return { meta, links: [...links, { rel: "stylesheet", href: appCss }] };
+  },
 
   shellComponent: RootDocument,
+  notFoundComponent: NotFoundPage,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -63,6 +52,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             ]}
           />
         )}
+        <Toaster richColors closeButton />
         <Scripts />
       </body>
     </html>
