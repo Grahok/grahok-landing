@@ -14,6 +14,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
 import { checkIsAuthenticatedServer } from "@/features/auth/actions/server";
+import RootProviders from "./-providers";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -51,22 +52,24 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
-        {process.env.NODE_ENV === "development" && (
-          <TanStackDevtools
-            config={{
-              position: "bottom-right",
-            }}
-            plugins={[
-              {
-                name: "Tanstack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-            ]}
-          />
-        )}
-        <Toaster richColors closeButton />
+        <RootProviders>
+          {children}
+          {process.env.NODE_ENV === "development" && (
+            <TanStackDevtools
+              config={{
+                position: "bottom-right",
+              }}
+              plugins={[
+                {
+                  name: "Tanstack Router",
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                TanStackQueryDevtools,
+              ]}
+            />
+          )}
+          <Toaster richColors closeButton />
+        </RootProviders>
         <Scripts />
       </body>
     </html>

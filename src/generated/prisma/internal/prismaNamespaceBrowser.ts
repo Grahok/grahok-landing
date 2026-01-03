@@ -49,6 +49,11 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
+  Product: 'Product',
+  LandingPageProduct: 'LandingPageProduct',
+  LandingPage: 'LandingPage',
+  OrderItem: 'OrderItem',
+  Order: 'Order',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -60,6 +65,66 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 /*
  * Enums
  */
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  images: 'images',
+  purchasePrice: 'purchasePrice',
+  sellPrice: 'sellPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const LandingPageProductScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  description: 'description',
+  landingPageId: 'landingPageId'
+} as const
+
+export type LandingPageProductScalarFieldEnum = (typeof LandingPageProductScalarFieldEnum)[keyof typeof LandingPageProductScalarFieldEnum]
+
+
+export const LandingPageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LandingPageScalarFieldEnum = (typeof LandingPageScalarFieldEnum)[keyof typeof LandingPageScalarFieldEnum]
+
+
+export const OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  productId: 'productId',
+  name: 'name',
+  quantity: 'quantity',
+  price: 'price'
+} as const
+
+export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const OrderScalarFieldEnum = {
+  id: 'id',
+  landingPageId: 'landingPageId',
+  totalPrice: 'totalPrice',
+  shippingCharge: 'shippingCharge',
+  orderStatus: 'orderStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
 
 export const UserScalarFieldEnum = {
   id: 'id',

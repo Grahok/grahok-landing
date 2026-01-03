@@ -364,21 +364,9 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
   unset?: boolean
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
