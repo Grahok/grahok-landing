@@ -18,13 +18,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 export default function OrderSummary() {
-  const { cartItems, customerDetails } = useLandingPage();
+  const { cartItems, customerDetails, getShippingCharge } = useLandingPage();
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.product.sellPrice,
     0,
   );
-  const shipping = 150;
-  const total = subtotal + shipping;
+  const shippingCharge = getShippingCharge();
+  const total = subtotal + shippingCharge;
 
   return (
     <section className="space-y-6">
@@ -100,7 +100,7 @@ export default function OrderSummary() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Shipping</span>
-              <span className="font-medium">৳{shipping}</span>
+              <span className="font-medium">৳{shippingCharge}</span>
             </div>
             <Separator />
             <div className="flex justify-between text-lg font-bold">

@@ -30,6 +30,8 @@ export default function CreateLandingPageForm() {
       name: "",
       slug: "",
       landingPageProducts: [],
+      shippingInsideDhaka: 0,
+      shippingOutsideDhaka: 0,
     } as CreateOrEditLandingPageType,
     validators: {
       onSubmit: createOrEditLandingPageSchema,
@@ -45,16 +47,19 @@ export default function CreateLandingPageForm() {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Failed to create landing page"
+            : "Failed to create landing page",
         );
       }
     },
   });
 
-  const addedProducts = useStore(form.store, (state) => state.values.landingPageProducts);
+  const addedProducts = useStore(
+    form.store,
+    (state) => state.values.landingPageProducts,
+  );
 
   const unAddedProducts = products.filter(
-    (product) => !addedProducts.some((item) => item.productId === product.id)
+    (product) => !addedProducts.some((item) => item.productId === product.id),
   );
   return (
     <form
@@ -147,7 +152,7 @@ export default function CreateLandingPageForm() {
                             }
                             children={(productId) => {
                               const product = products.find(
-                                (item) => item.id === productId
+                                (item) => item.id === productId,
                               );
                               return (
                                 <div className="flex items-center gap-3 justify-between">
@@ -187,7 +192,7 @@ export default function CreateLandingPageForm() {
                                     onBlur={productDescriptionField.handleBlur}
                                     onChange={(e) =>
                                       productDescriptionField.handleChange(
-                                        e.target.value
+                                        e.target.value,
                                       )
                                     }
                                     aria-invalid={isInvalidProductDescription}
@@ -249,7 +254,7 @@ export default function CreateLandingPageForm() {
                                             variant="destructive"
                                             onClick={() =>
                                               productFaqsField.removeValue(
-                                                faqIndex
+                                                faqIndex,
                                               )
                                             }
                                           >
@@ -259,7 +264,7 @@ export default function CreateLandingPageForm() {
                                         <form.Field
                                           name={`landingPageProducts[${index}].faqs[${faqIndex}].question`}
                                           children={(
-                                            productFaqQuestionField
+                                            productFaqQuestionField,
                                           ) => {
                                             const isInvalidProductFaqQuestion =
                                               productFaqQuestionField.state.meta
@@ -292,7 +297,7 @@ export default function CreateLandingPageForm() {
                                                   }
                                                   onChange={(e) =>
                                                     productFaqQuestionField.handleChange(
-                                                      e.target.value
+                                                      e.target.value,
                                                     )
                                                   }
                                                   aria-invalid={
@@ -346,7 +351,7 @@ export default function CreateLandingPageForm() {
                                                   }
                                                   onChange={(e) =>
                                                     productFaqAnswerField.handleChange(
-                                                      e.target.value
+                                                      e.target.value,
                                                     )
                                                   }
                                                   aria-invalid={
@@ -366,7 +371,7 @@ export default function CreateLandingPageForm() {
                                           }}
                                         />
                                       </FieldGroup>
-                                    )
+                                    ),
                                   )}
                                   {isInvalidProductFaqs && (
                                     <FieldError
@@ -389,6 +394,52 @@ export default function CreateLandingPageForm() {
                 ))}
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </FieldGroup>
+            );
+          }}
+        />
+        <form.Field
+          name="shippingInsideDhaka"
+          children={(field) => {
+            const isInvalid =
+              field.state.meta.isTouched && !field.state.meta.isValid;
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>
+                  Shipping Inside Dhaka
+                </FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={() => field.handleBlur()}
+                  onChange={(e) => field.handleChange(Number(e.target.value))}
+                  aria-invalid={isInvalid}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            );
+          }}
+        />
+        <form.Field
+          name="shippingOutsideDhaka"
+          children={(field) => {
+            const isInvalid =
+              field.state.meta.isTouched && !field.state.meta.isValid;
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>
+                  Shipping Outside Dhaka
+                </FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={() => field.handleBlur()}
+                  onChange={(e) => field.handleChange(Number(e.target.value))}
+                  aria-invalid={isInvalid}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
             );
           }}
         />

@@ -49,6 +49,8 @@ type CustomerDetails = {
   address: TCustomerDetailsInOrder["address"];
 };
 
+type ShippingRegion = "inside-dhaka" | "outside-dhaka";
+
 type OrderDetails = {
   cartItems: CartItem[];
   customerDetails: CustomerDetails;
@@ -76,6 +78,11 @@ export type LandingPageContextType = {
   // Customer Information
   customerDetails: CustomerDetails;
   setCustomerDetails: (customerDetails: CustomerDetails) => void;
+
+  // Shipping
+  shippingRegion: ShippingRegion;
+  setShippingRegion: (region: ShippingRegion) => void;
+  getShippingCharge: () => number;
 
   // Order Success Modal
   isOrderSuccessModalOpen: boolean;
@@ -147,6 +154,15 @@ export const LandingPageProvider = ({
     address: "",
   });
 
+  // Shipping
+  const [shippingRegion, setShippingRegion] =
+    useState<ShippingRegion>("inside-dhaka");
+  const getShippingCharge = () => {
+    return shippingRegion === "inside-dhaka"
+      ? landingPage.shippingInsideDhaka
+      : landingPage.shippingOutsideDhaka;
+  };
+
   // Order Success Modal
   const [isOrderSuccessModalOpen, setIsOrderSuccessModalOpen] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
@@ -163,6 +179,9 @@ export const LandingPageProvider = ({
         clearCart,
         customerDetails,
         setCustomerDetails,
+        shippingRegion,
+        setShippingRegion,
+        getShippingCharge,
         isOrderSuccessModalOpen,
         setIsOrderSuccessModalOpen,
         orderDetails,

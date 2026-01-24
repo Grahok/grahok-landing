@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import {
   createOrEditOrderSchema,
   CreateOrEditOrderType,
-  orderStatuses,
 } from "../types/orderTypes";
 import { IconTrash } from "@tabler/icons-react";
 import { toast } from "sonner";
@@ -56,6 +55,7 @@ export default function EditOrderForm({
       orderItems: order.orderItems,
       totalPrice: order.totalPrice,
       shippingCharge: order.shippingCharge,
+      shippingRegion: order.shippingRegion as "inside-dhaka" | "outside-dhaka",
       orderStatus: order.orderStatus,
     } as CreateOrEditOrderType,
     validators: {
@@ -72,7 +72,7 @@ export default function EditOrderForm({
         toast.success("Order Updated Successfully");
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to update order"
+          error instanceof Error ? error.message : "Failed to update order",
         );
       }
     },
@@ -82,11 +82,11 @@ export default function EditOrderForm({
   // We use useStore to subscribe to specific parts of the form state to avoid unnecessary re-renders
   const currentOrderItems = useStore(
     form.store,
-    (state) => state.values.orderItems
+    (state) => state.values.orderItems,
   );
   const currentShipping = useStore(
     form.store,
-    (state) => state.values.shippingCharge
+    (state) => state.values.shippingCharge,
   );
 
   const [itemsTotal, setItemsTotal] = useState(0);
@@ -110,7 +110,7 @@ export default function EditOrderForm({
   const unAddedProducts = useMemo(() => {
     return products.filter(
       (product) =>
-        !currentOrderItems.some((item) => item.productId === product.id)
+        !currentOrderItems.some((item) => item.productId === product.id),
     );
   }, [products, currentOrderItems]);
 
@@ -241,7 +241,7 @@ export default function EditOrderForm({
                     <TableBody>
                       {field.state.value.map((item, index) => {
                         const product = products.find(
-                          (p) => p.id === item.productId
+                          (p) => p.id === item.productId,
                         );
                         if (!product) return null;
 
@@ -262,7 +262,7 @@ export default function EditOrderForm({
                                       onBlur={subField.handleBlur}
                                       onChange={(e) =>
                                         subField.handleChange(
-                                          e.target.valueAsNumber
+                                          e.target.valueAsNumber,
                                         )
                                       }
                                     />

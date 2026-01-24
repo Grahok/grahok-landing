@@ -16,6 +16,7 @@ import {
   IconCircleCheck,
 } from "@tabler/icons-react";
 import { Field, FieldGroup } from "@/components/ui/field";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function CustomerInformation() {
   const {
@@ -25,17 +26,22 @@ export default function CustomerInformation() {
     cartItems,
     setIsOrderSuccessModalOpen,
     setOrderDetails,
+    shippingRegion,
+    setShippingRegion,
+    getShippingCharge,
   } = useLandingPage();
 
   const isFormValid =
     customerDetails.name &&
     customerDetails.mobileNumber &&
-    customerDetails.address;
+    customerDetails.address &&
+    shippingRegion;
   const isCartEmpty = cartItems.length === 0;
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.product.sellPrice,
     0,
   );
+  const shippingCharge = getShippingCharge();
 
   async function handleCheckOut() {
     if (!isFormValid) {
@@ -58,7 +64,8 @@ export default function CustomerInformation() {
           })),
           orderStatus: "pending",
           totalPrice,
-          shippingCharge: 150,
+          shippingCharge,
+          shippingRegion,
           landingPageId: landingPage.id,
         },
       });
@@ -67,9 +74,10 @@ export default function CustomerInformation() {
         setOrderDetails({
           cartItems,
           customerDetails,
-          totalAmount: totalPrice + 150,
+          totalAmount: totalPrice + shippingCharge,
         });
-        toast.success("Order placed successfully");``
+        toast.success("Order placed successfully");
+        ``;
         setIsOrderSuccessModalOpen(true);
       } else {
         toast.error("Failed to place order");
@@ -158,7 +166,39 @@ export default function CustomerInformation() {
             />
           </Field>
         </FieldGroup>
-
+        <FieldGroup>
+          <Field>
+            <Label className="flex items-center gap-2">
+              <IconMapPin className="h-4 w-4" />
+              Shipping Location
+            </Label>
+            <RadioGroup
+              value={shippingRegion}
+              onValueChange={(value) =>
+                setShippingRegion(value as "inside-dhaka" | "outside-dhaka")
+              }
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <RadioGroupItem value="inside-dhaka" id="inside-dhaka" />
+                  <Label htmlFor="inside-dhaka">Inside Dhaka</Label>
+                </div>
+                <span className="text-sm font-medium">
+                  ৳{landingPage.shippingInsideDhaka}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <RadioGroupItem value="outside-dhaka" id="outside-dhaka" />
+                  <Label htmlFor="outside-dhaka">Outside Dhaka</Label>
+                </div>
+                <span className="text-sm font-medium">
+                  ৳{landingPage.shippingOutsideDhaka}
+                </span>
+              </div>
+            </RadioGroup>
+          </Field>
+        </FieldGroup>
         <Separator />
 
         <div className="space-y-4">
@@ -171,7 +211,9 @@ export default function CustomerInformation() {
             ) : (
               <div className="flex items-center gap-2 text-sm text-orange-600">
                 <IconAlertCircle className="h-4 w-4" />
-                <span>Please complete all required fields</span>
+                <span>
+                  Please complete all required fields including shipping region
+                </span>
               </div>
             )}
           </div>
@@ -183,7 +225,7 @@ export default function CustomerInformation() {
             disabled={!isFormValid || isCartEmpty}
           >
             <IconShoppingBag className="h-4 w-4 mr-2" />
-            Place Order • ৳{totalPrice + 150}
+            Place Order • ৳{totalPrice + shippingCharge}
           </Button>
         </div>
       </CardContent>

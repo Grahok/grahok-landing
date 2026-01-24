@@ -17,6 +17,7 @@ export default function OrderSuccessModal() {
     orderDetails,
     clearCart,
     setCustomerDetails,
+    getShippingCharge,
   } = useLandingPage();
 
   const handleClose = () => {
@@ -73,6 +74,14 @@ export default function OrderSuccessModal() {
                   </span>
                 </div>
               ))}
+              <div className="border-t pt-2 flex justify-between items-start text-sm">
+                <span className="font-medium text-gray-700">
+                  Shipping Charge
+                </span>
+                <span className="font-semibold text-gray-900 whitespace-nowrap">
+                  ৳ {getShippingCharge()}
+                </span>
+              </div>
               <div className="border-t pt-2 flex justify-between items-center font-bold text-gray-900">
                 <span>Total Amount</span>
                 <span>৳ {orderDetails.totalAmount}</span>

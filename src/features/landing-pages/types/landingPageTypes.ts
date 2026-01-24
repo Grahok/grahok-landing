@@ -19,6 +19,8 @@ export const createOrEditLandingPageSchema = z.object({
       }),
     )
     .min(1, "At least one product is required"),
+  shippingInsideDhaka: z.number().int().nonnegative(),
+  shippingOutsideDhaka: z.number().int().nonnegative(),
 });
 
 export const landingPageProductFaqsSchema = z.array(

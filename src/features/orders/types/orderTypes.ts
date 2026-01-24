@@ -18,8 +18,10 @@ const orderItemInputSchema = z.object({
 });
 
 export const orderStatuses = ["pending", "delivered", "cancelled"] as const;
+export const shippingRegions = ["inside-dhaka", "outside-dhaka"] as const;
 
 export type TOrderStatus = (typeof orderStatuses)[number];
+export type TShippingRegion = (typeof shippingRegions)[number];
 
 // 4. Main Create Order Schema
 export const createOrEditOrderSchema = z.object({
@@ -34,6 +36,7 @@ export const createOrEditOrderSchema = z.object({
   // but MUST be recalculated/verified on the backend!
   totalPrice: z.number().nonnegative("Total price cannot be negative"),
   shippingCharge: z.number().nonnegative("Shipping charge cannot be negative"),
+  shippingRegion: z.enum(shippingRegions),
 
   // Optional: Allow status override if this is an admin edit
   orderStatus: z.enum(orderStatuses),

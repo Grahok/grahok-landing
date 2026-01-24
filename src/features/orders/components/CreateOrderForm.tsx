@@ -11,6 +11,7 @@ import {
   createOrEditOrderSchema,
   CreateOrEditOrderType,
   orderStatuses,
+  shippingRegions,
 } from "../types/orderTypes";
 import { createOrderServer } from "../actions/server/createOrderServer";
 import { IconTrash } from "@tabler/icons-react";
@@ -35,7 +36,7 @@ export default function CreateOrderForm() {
     queryFn: getProductsServer,
   });
 
-  const form = useForm({
+const form = useForm({
     defaultValues: {
       customer: {
         name: "",
@@ -45,6 +46,7 @@ export default function CreateOrderForm() {
       orderItems: [],
       totalPrice: 0,
       shippingCharge: 0,
+      shippingRegion: shippingRegions[0],
       orderStatus: orderStatuses[0],
     } as CreateOrEditOrderType,
     validators: {
