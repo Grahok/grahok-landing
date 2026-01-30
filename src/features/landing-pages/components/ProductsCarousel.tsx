@@ -5,7 +5,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { LandingPageContextType, useLandingPage } from "../contexts/LandingPageContext";
+import {
+  LandingPageContextType,
+  useLandingPage,
+} from "../contexts/LandingPageContext";
 import { Image } from "@unpic/react";
 import {
   Accordion,
@@ -54,7 +57,7 @@ function ProductCard({
   const [quantity, setQuantity] = useState(1);
   const incrementQuantity = () => setQuantity((prev) => Math.min(prev + 1, 99));
   const decrementQuantity = () => setQuantity((prev) => Math.max(prev - 1, 1));
-  const { addToCart } = useLandingPage();
+  const { addToCart, productPresentInCart } = useLandingPage();
 
   return (
     <Card className="overflow-hidden p-0">
@@ -127,19 +130,30 @@ function ProductCard({
                   <Button
                     size="icon-lg"
                     onClick={decrementQuantity}
-                    disabled={quantity <= 1}
+                    disabled={
+                      quantity <= 1 ||
+                      productPresentInCart(landingPageProduct.product.id)
+                    }
                   >
                     <IconMinus />
                   </Button>
                   <Input
-                    className="text-center h-auto"
+                    className="text-center h-auto w-20"
                     type="number"
                     value={quantity}
-                    onChange={(e) => setQuantity(e.target.valueAsNumber)}
+                    onChange={(e) => setQuantity(e.target.valueAsNumber || 1)}
                     min={1}
-                    max={99}
+                    disabled={productPresentInCart(
+                      landingPageProduct.product.id,
+                    )}
                   />
-                  <Button size="icon-lg" onClick={incrementQuantity}>
+                  <Button
+                    size="icon-lg"
+                    onClick={incrementQuantity}
+                    disabled={productPresentInCart(
+                      landingPageProduct.product.id,
+                    )}
+                  >
                     <IconPlus />
                   </Button>
                 </ButtonGroup>
@@ -150,9 +164,18 @@ function ProductCard({
                     addToCart(landingPageProduct.product, quantity);
                     setQuantity(1);
                   }}
+                  disabled={
+                    quantity <= 0 ||
+                    productPresentInCart(landingPageProduct.product.id)
+                  }
+                  asChild
                 >
-                  <IconShoppingCart className="h-4 w-4 mr-2" />
-                  Add to Cart
+                  <a href="#order-section">
+                    <IconShoppingCart className="h-4 w-4 mr-2" />
+                    {productPresentInCart(landingPageProduct.product.id)
+                      ? "Added to Cart"
+                      : "Buy Now"}
+                  </a>
                 </Button>
               </div>
             </div>

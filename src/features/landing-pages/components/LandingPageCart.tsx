@@ -103,12 +103,9 @@ function CartItem({ cartItem }: { cartItem: CartItem }) {
         </div>
 
         <div className="flex justify-between items-end space-y-2">
-          <div className="flex items-center gap-2">
             <Badge variant="secondary">
               ৳{landingPageProduct.product.sellPrice}
             </Badge>
-            <span className="text-sm text-muted-foreground">each</span>
-          </div>
 
           <div className="flex items-center border rounded-lg">
             <Button

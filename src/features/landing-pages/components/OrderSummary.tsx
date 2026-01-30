@@ -130,10 +130,10 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
           {landingPageProduct.product.name}
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-          <Badge variant="outline" className="text-xs px-1.5 py-0">
-            {cartItem.quantity}x
-          </Badge>
-          <span>৳{landingPageProduct.product.sellPrice} each</span>
+        <Badge variant="outline" className="text-xs px-1.5 py-0">
+          {cartItem.quantity}x
+        </Badge>
+          <span>৳{landingPageProduct.product.sellPrice}</span>
         </div>
       </div>
       <div className="text-right">

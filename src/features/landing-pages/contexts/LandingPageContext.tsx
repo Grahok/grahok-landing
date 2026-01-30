@@ -6,6 +6,7 @@ import {
 } from "@/generated/prisma/models";
 import { createContext, useContext, useState } from "react";
 import { LandingPageProductFaqsType } from "../types/landingPageTypes";
+import { toast } from "sonner";
 
 type LandingPageProductWithTypedFaqs = Omit<
   LandingPageGetPayload<{
@@ -74,6 +75,7 @@ export type LandingPageContextType = {
     quantity: CartItem["quantity"],
   ) => void;
   clearCart: () => void;
+  productPresentInCart: (productId: CartItem["product"]["id"]) => boolean;
 
   // Customer Information
   customerDetails: CustomerDetails;
@@ -108,12 +110,18 @@ export const LandingPageProvider = ({
     product: CartItem["product"],
     quantity: CartItem["quantity"],
   ) => {
+    if (productPresentInCart(product.id)) {
+      toast.error("Product already in cart");
+      return;
+    }
     setCartItems((prev) => [...prev, { product, quantity }]);
+    toast.success("Product added to cart");
   };
   const removeFromCart = (productId: CartItem["product"]["id"]) => {
     setCartItems((prev) =>
       prev.filter((item) => item.product.id !== productId),
     );
+    toast.success("Product removed from cart");
   };
   const incrementCartItemQuantity = (productId: CartItem["product"]["id"]) => {
     setCartItems((prev) =>
@@ -147,6 +155,10 @@ export const LandingPageProvider = ({
     setCartItems([]);
   };
 
+  const productPresentInCart = (productId: CartItem["product"]["id"]) => {
+    return cartItems.some((item) => item.product.id === productId);
+  };
+
   // Customer Information
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
     name: "",
@@ -177,6 +189,7 @@ export const LandingPageProvider = ({
         decrementCartItemQuantity,
         updateCartItemQuantity,
         clearCart,
+        productPresentInCart,
         customerDetails,
         setCustomerDetails,
         shippingRegion,
