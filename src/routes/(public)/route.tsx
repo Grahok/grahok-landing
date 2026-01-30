@@ -7,7 +7,7 @@ export const Route = createFileRoute("/(public)")({
 
 function RouteComponent() {
   return (
-    <main className="min-h-dvh space-y-12">
+    <main className="min-h-dvh space-y-6">
       <SiteHeader />
       <Outlet />
     </main>

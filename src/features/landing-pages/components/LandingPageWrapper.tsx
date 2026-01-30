@@ -6,7 +6,7 @@ import ProductsCarousel from "./ProductsCarousel";
 
 export default function LandingPageWrapper() {
   return (
-    <main className="p-4 space-y-6">
+    <section className="p-4 space-y-12">
       <ProductsCarousel />
       <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="space-y-12">
@@ -16,6 +16,6 @@ export default function LandingPageWrapper() {
         <OrderSummary />
       </section>
       <OrderSuccessModal />
-    </main>
+    </section>
   );
 }
