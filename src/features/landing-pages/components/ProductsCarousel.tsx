@@ -18,7 +18,13 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { IconMinus, IconPlus, IconShoppingCart } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconMinus,
+  IconPlus,
+  IconShoppingCart,
+} from "@tabler/icons-react";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -29,20 +35,21 @@ export default function ProductsCarousel() {
   const landingPageProducts = landingPage.landingPageProducts;
 
   return (
-    <section className="container mx-auto py-8">
+    <section className="container mx-auto">
       <Carousel>
         <CarouselContent>
           {landingPageProducts.map((landingPageProduct) => (
-            <CarouselItem
-              key={landingPageProduct.id}
-              className="md:basis-1/2 lg:basis-1/1"
-            >
+            <CarouselItem key={landingPageProduct.id}>
               <ProductCard landingPageProduct={landingPageProduct} />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-2" />
-        <CarouselNext className="right-2" />
+        <CarouselPrevious size="icon-lg" variant="default" className="left-2 top-1/2 -translate-y-1/2">
+          <IconChevronLeft />
+        </CarouselPrevious>
+        <CarouselNext size="icon-lg" variant="default" className="right-2 top-1/2 -translate-y-1/2">
+          <IconChevronRight />
+        </CarouselNext>
       </Carousel>
     </section>
   );
@@ -117,8 +124,8 @@ function ProductCard({
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-medium">Total Price</h4>
-                <p className="text-muted-foreground">
+                <h4 className="text-lg font-medium">Total Price</h4>
+                <p className="font-bold text-muted-foreground">
                   ৳{landingPageProduct.product.sellPrice * quantity}
                 </p>
               </div>

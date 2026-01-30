@@ -97,7 +97,7 @@ function OrdersTableActions({ order }: { order: OrderModel }) {
       <Button size="icon" asChild>
         <Link
           to={`/dashboard/orders/view/$orderId`}
-          params={{ orderId: String(order.id) }}
+          params={{ orderId: order.id }}
         >
           <IconEye />
         </Link>
@@ -105,7 +105,7 @@ function OrdersTableActions({ order }: { order: OrderModel }) {
       <Button size="icon" asChild>
         <Link
           to={`/dashboard/orders/edit/$orderId`}
-          params={{ orderId: String(order.id) }}
+          params={{ orderId: order.id }}
         >
           <IconPencil />
         </Link>

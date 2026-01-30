@@ -1,4 +1,4 @@
-import SiteHeader from "@/features/home/SiteHeader";
+import SiteHeader from "@/features/home/components/SiteHeader";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(public)")({

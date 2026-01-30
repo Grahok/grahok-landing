@@ -87,9 +87,9 @@ function CartItem({ cartItem }: { cartItem: CartItem }) {
         />
       </div>
 
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 flex-col gap-4">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-semibold truncate">
+          <h3 className="text-lg font-semibold">
             {landingPageProduct.product.name}
           </h3>
           <Button
@@ -103,9 +103,18 @@ function CartItem({ cartItem }: { cartItem: CartItem }) {
         </div>
 
         <div className="flex justify-between items-end space-y-2">
-            <Badge variant="secondary">
-              ৳{landingPageProduct.product.sellPrice}
-            </Badge>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+              <Badge variant="outline" className="text-xs px-1.5 py-0">
+                {cartItem.quantity}x
+              </Badge>
+              <span>৳{landingPageProduct.product.sellPrice}</span>
+            </div>
+
+            <h4 className="font-semibold">
+              ৳{landingPageProduct.product.sellPrice * cartItem.quantity}
+            </h4>
+          </div>
 
           <div className="flex items-center border rounded-lg">
             <Button

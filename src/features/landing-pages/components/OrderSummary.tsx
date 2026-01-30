@@ -65,7 +65,7 @@ export default function OrderSummary() {
 
           {customerDetails && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+              <h3 className="text-xl font-semibold text-muted-foreground tracking-wide">
                 Customer Information
               </h3>
               <div className="space-y-2 rounded-lg bg-muted/30 p-4">
@@ -137,7 +137,7 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
         </div>
       </div>
       <div className="text-right">
-        <div className="font-semibold">৳{itemTotal}</div>
+        <h4 className="font-semibold">৳{itemTotal}</h4>
       </div>
     </div>
   );
