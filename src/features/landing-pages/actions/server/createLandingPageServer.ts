@@ -17,6 +17,8 @@ export const createLandingPageServer = createServerFn()
         landingPageProducts: {
           create: productsDetails,
         },
+        shippingInsideDhaka: data.shippingInsideDhaka,
+        shippingOutsideDhaka: data.shippingOutsideDhaka,
       },
     });
     return landingPage;

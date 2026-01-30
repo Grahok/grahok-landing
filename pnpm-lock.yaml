@@ -11,6 +11,9 @@ importers:
       '@faker-js/faker':
         specifier: ^10.0.0
         version: 10.2.0
+      '@fontsource-variable/anek-bangla':
+        specifier: ^5.2.7
+        version: 5.2.7
       '@prisma/adapter-pg':
         specifier: ^7.2.0
         version: 7.3.0
@@ -605,6 +608,9 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource-variable/anek-bangla@5.2.7':
+    resolution: {integrity: sha512-9ryEyOLUxQ50Qul4PGc2F5vK4iDc83P7WTppH/PpvuV9VjgrB4MzuKSu8ccxISbpA4PlDEc4I9MmeUQQrWb/Qw==}
 
   '@hono/node-server@1.19.9':
     resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
@@ -3949,6 +3955,8 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fontsource-variable/anek-bangla@5.2.7': {}
 
   '@hono/node-server@1.19.9(hono@4.11.4)':
     dependencies:
