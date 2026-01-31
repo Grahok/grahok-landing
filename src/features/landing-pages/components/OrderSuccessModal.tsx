@@ -57,7 +57,7 @@ export default function OrderSuccessModal() {
                   <Package className="h-4 w-4" />
                   <span>Order Summary</span>
                 </div>
-                <span className="text-background">ID: #{orderDetails.orderId}</span>
+                <span className="text-gray-700">ID: #{orderDetails.orderId}</span>
               </div>
             </div>
             <div className="space-y-3">
