@@ -103,7 +103,7 @@ function LandingPagesTableActions({
       <Button size="icon" asChild>
         <Link
           to={`/dashboard/landing-pages/edit/$landingPageId`}
-          params={{ landingPageId: String(landingPage.id) }}
+          params={{ landingPageId: landingPage.id }}
         >
           <IconPencil />
         </Link>

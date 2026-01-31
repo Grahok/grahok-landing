@@ -106,7 +106,7 @@ function ProductsTableActions({ product }: { product: ProductModel }) {
       <Button size="icon" asChild>
         <Link
           to={`/dashboard/products/edit/$productId`}
-          params={{ productId: String(product.id) }}
+          params={{ productId: product.id }}
         >
           <IconPencil />
         </Link>

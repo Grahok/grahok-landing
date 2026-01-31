@@ -51,9 +51,14 @@ export default function OrderSuccessModal() {
         <div className="space-y-6 py-4">
           {/* Order Summary */}
           <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-            <div className="flex items-center gap-2 text-primary font-semibold border-b pb-2">
-              <Package className="h-4 w-4" />
-              <span>Order Summary</span>
+            <div className="text-primary font-semibold border-b pb-2">
+              <div className="flex items-center gap-2 justify-between">
+                <div className="flex items-center gap-2">
+                  <Package className="h-4 w-4" />
+                  <span>Order Summary</span>
+                </div>
+                <span className="text-background">ID: #{orderDetails.orderId}</span>
+              </div>
             </div>
             <div className="space-y-3">
               {orderDetails.cartItems.map((item) => (

@@ -2,6 +2,7 @@ import { TCustomerDetailsInOrder } from "@/features/orders/types/orderTypes";
 import {
   LandingPageGetPayload,
   OrderItemModel,
+  OrderModel,
   ProductModel,
 } from "@/generated/prisma/models";
 import { createContext, useContext, useState } from "react";
@@ -53,6 +54,7 @@ type CustomerDetails = {
 type ShippingRegion = "inside-dhaka" | "outside-dhaka";
 
 type OrderDetails = {
+  orderId: OrderModel["id"];
   cartItems: CartItem[];
   customerDetails: CustomerDetails;
   totalAmount: number;

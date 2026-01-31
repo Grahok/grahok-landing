@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useLandingPage } from "../contexts/LandingPageContext";
-import { Button } from "@/components/ui/button";
 import { createOrderServer } from "@/features/orders/actions/server/createOrderServer";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,6 +16,8 @@ import {
 } from "@tabler/icons-react";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { sendOrderSuccessMessageServer } from "../actions/server/sendOrderSuccessMessageServer";
+import { ActionButton } from "@/components/ui/action-button";
 
 export default function CustomerInformation() {
   const {
@@ -72,12 +73,33 @@ export default function CustomerInformation() {
 
       if (order) {
         setOrderDetails({
+          orderId: order.id,
           cartItems,
           customerDetails,
           totalAmount: totalPrice + shippingCharge,
         });
-        toast.success("Order placed successfully");
-        ``;
+
+        try {
+          const { success } = await sendOrderSuccessMessageServer({
+            data: {
+              orderId: order.id,
+              mobileNumber: customerDetails.mobileNumber,
+              customerName: customerDetails.name,
+            },
+          });
+
+          if (success) {
+            toast.success("Order placed successfully");
+          } else {
+            toast.error("Failed to send order success message");
+          }
+        } catch (error) {
+          toast.error(
+            error instanceof Error
+              ? error.message
+              : "Failed to send order success message",
+          );
+        }
         setIsOrderSuccessModalOpen(true);
       } else {
         toast.error("Failed to place order");
@@ -218,15 +240,15 @@ export default function CustomerInformation() {
             )}
           </div>
 
-          <Button
+          <ActionButton
             className="w-full"
             size="lg"
-            onClick={handleCheckOut}
+            action={handleCheckOut}
             disabled={!isFormValid || isCartEmpty}
           >
             <IconShoppingBag className="h-4 w-4 mr-2" />
             Place Order • ৳{totalPrice + shippingCharge}
-          </Button>
+          </ActionButton>
         </div>
       </CardContent>
     </Card>
