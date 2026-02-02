@@ -4,7 +4,9 @@ import { createOrEditProductSchema } from "../../types/productTypes";
 import { ProductModel } from "@/generated/prisma/models";
 import z from "zod";
 
-export const updateProductServer = createServerFn()
+export const updateProductServer = createServerFn({
+  method: "POST",
+})
   .inputValidator(
     (data: {
       productId: ProductModel["id"];

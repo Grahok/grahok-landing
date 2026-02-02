@@ -2,7 +2,9 @@ import { prisma } from "@/db";
 import { createServerFn } from "@tanstack/react-start";
 import { createOrEditLandingPageSchema } from "../../types/landingPageTypes";
 
-export const createLandingPageServer = createServerFn()
+export const createLandingPageServer = createServerFn({
+  method: "POST",
+})
   .inputValidator(createOrEditLandingPageSchema)
   .handler(async ({ data }) => {
     const productsDetails = data.landingPageProducts.map((product) => ({

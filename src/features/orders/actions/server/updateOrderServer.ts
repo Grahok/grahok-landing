@@ -4,7 +4,9 @@ import { createOrEditOrderSchema } from "../../types/orderTypes";
 import { OrderModel } from "@/generated/prisma/models";
 import z from "zod";
 
-export const updateOrderServer = createServerFn()
+export const updateOrderServer = createServerFn({
+  method: "POST",
+})
   .inputValidator(
     (data: {
       orderId: OrderModel["id"];

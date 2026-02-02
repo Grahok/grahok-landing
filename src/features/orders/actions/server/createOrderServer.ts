@@ -5,7 +5,9 @@ import {
   customerDetailsInOrderSchema,
 } from "../../types/orderTypes";
 
-export const createOrderServer = createServerFn()
+export const createOrderServer = createServerFn({
+  method: "POST",
+})
   .inputValidator(createOrEditOrderSchema)
   .handler(async ({ data }) => {
     // 1. Fetch the real products from the DB to get current 'sellPrice'
