@@ -24,7 +24,17 @@ export const Route = createFileRoute("/(public)/landing-page/$landingPageSlug")(
       return { landingPage };
     },
     head: ({ loaderData }) =>
-      generateMetadata({ title: loaderData?.landingPage.name }),
+      generateMetadata({
+        title: loaderData?.landingPage.name,
+        openGraph: {
+          images:
+            loaderData?.landingPage.landingPageProducts[0].product.images[0],
+        },
+        twitter: {
+          card: "summary_large_image",
+          images: loaderData?.landingPage.landingPageProducts[0].product.images,
+        },
+      }),
   },
 );
 
