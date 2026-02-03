@@ -7,7 +7,7 @@ export const getLandingPageBySlugServer = createServerFn()
   .handler(async ({ data }) => {
     const landingPage = await prisma.landingPage.findUnique({
       where: {
-        slug: data.slug,
+        slug_isActive: { slug: data.slug, isActive: true },
       },
       include: {
         landingPageProducts: {
