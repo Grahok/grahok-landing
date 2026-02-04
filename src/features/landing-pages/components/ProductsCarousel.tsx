@@ -77,6 +77,7 @@ function ProductCard({
                 src={landingPageProduct.product.images[activeImageIndex]}
                 alt={landingPageProduct.product.name}
                 layout="fullWidth"
+                priority={true}
               />
             </div>
             <div className="flex gap-2 overflow-x-auto pb-2">
