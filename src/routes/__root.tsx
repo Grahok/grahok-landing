@@ -66,10 +66,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script
-          crossOrigin="anonymous"
-          src="https://tweakcn.com/live-preview.min.js"
-        />
       </head>
       <body>
         <RootProviders>
