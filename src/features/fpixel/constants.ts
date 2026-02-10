@@ -1,1 +1,1 @@
-export const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID!;
+export const FACEBOOK_PIXEL_ID = import.meta.env.VITE_FACEBOOK_PIXEL_ID!;
