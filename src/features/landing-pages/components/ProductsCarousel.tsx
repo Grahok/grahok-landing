@@ -44,10 +44,18 @@ export default function ProductsCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious size="icon-lg" variant="default" className="left-2 top-1/2 -translate-y-1/2">
+        <CarouselPrevious
+          size="icon-lg"
+          variant="default"
+          className="left-2 top-1/2 -translate-y-1/2"
+        >
           <IconChevronLeft />
         </CarouselPrevious>
-        <CarouselNext size="icon-lg" variant="default" className="right-2 top-1/2 -translate-y-1/2">
+        <CarouselNext
+          size="icon-lg"
+          variant="default"
+          className="right-2 top-1/2 -translate-y-1/2"
+        >
           <IconChevronRight />
         </CarouselNext>
       </Carousel>
@@ -171,13 +179,24 @@ function ProductCard({
                   onClick={() => {
                     addToCart(landingPageProduct.product, quantity);
                     setQuantity(1);
-                    window.fbq("track", "AddToCart", {
-                      content_type: "product",
-                      content_ids: [landingPageProduct.product.id],
-                      content_name: landingPageProduct.product.name,
-                      content_price: landingPageProduct.product.sellPrice,
-                      content_quantity: quantity,
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                      event: "add_to_cart",
+                      ecommerce: {
+                        productId: landingPageProduct.product.id,
+                        productName: landingPageProduct.product.name,
+                        productPrice: landingPageProduct.product.sellPrice,
+                        productQuantity: quantity,
+                        totalPrice: landingPageProduct.product.sellPrice * quantity,
+                      },
                     });
+                    // window.fbq("track", "AddToCart", {
+                    //   content_type: "product",
+                    //   content_ids: [landingPageProduct.product.id],
+                    //   content_name: landingPageProduct.product.name,
+                    //   content_price: landingPageProduct.product.sellPrice,
+                    //   content_quantity: quantity,
+                    // });
                   }}
                   disabled={
                     quantity <= 0 ||
