@@ -79,6 +79,20 @@ export default function CustomerInformation() {
           totalAmount: totalPrice + shippingCharge,
         });
 
+        toast.success("Order placed successfully");
+        window.dataLayer.push({
+          event: "purchase",
+          transaction_id: order.id,
+          value: order.totalPrice,
+          shipping: order.shippingCharge,
+          currency: "BDT",
+          contents: order.orderItems.map((orderItem) => ({
+            item_id: orderItem.product.id,
+            item_name: orderItem.product.name,
+            price: orderItem.product.sellPrice,
+            quantity: orderItem.quantity,
+          })),
+        });
         try {
           const { success } = await sendOrderSuccessMessageServer({
             data: {
@@ -88,21 +102,7 @@ export default function CustomerInformation() {
             },
           });
 
-          if (success) {
-            toast.success("Order placed successfully");
-            window.fbq("track", "Purchase", {
-              value: totalPrice + shippingCharge,
-              currency: "BDT",
-              contents: cartItems.map((item) => ({
-                id: item.product.id,
-                name: item.product.name,
-                quantity: item.quantity,
-                price: item.product.sellPrice,
-              })),
-              content_type: "product",
-              num_items: cartItems.length,
-            });
-          } else {
+          if (!success) {
             toast.error("Failed to send order success message");
           }
         } catch (error) {

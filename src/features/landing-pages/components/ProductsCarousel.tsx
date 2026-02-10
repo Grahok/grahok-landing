@@ -179,24 +179,19 @@ function ProductCard({
                   onClick={() => {
                     addToCart(landingPageProduct.product, quantity);
                     setQuantity(1);
-                    window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                       event: "add_to_cart",
-                      ecommerce: {
-                        productId: landingPageProduct.product.id,
-                        productName: landingPageProduct.product.name,
-                        productPrice: landingPageProduct.product.sellPrice,
-                        productQuantity: quantity,
-                        totalPrice: landingPageProduct.product.sellPrice * quantity,
-                      },
+                      currency: "BDT",
+                      value: landingPageProduct.product.sellPrice * quantity,
+                      contents: [
+                        {
+                          item_id: landingPageProduct.product.id,
+                          item_name: landingPageProduct.product.name,
+                          price: landingPageProduct.product.sellPrice,
+                          quantity: quantity,
+                        },
+                      ],
                     });
-                    // window.fbq("track", "AddToCart", {
-                    //   content_type: "product",
-                    //   content_ids: [landingPageProduct.product.id],
-                    //   content_name: landingPageProduct.product.name,
-                    //   content_price: landingPageProduct.product.sellPrice,
-                    //   content_quantity: quantity,
-                    // });
                   }}
                   disabled={
                     quantity <= 0 ||

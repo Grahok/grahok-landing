@@ -15,7 +15,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
 import { checkIsAuthenticatedServer } from "@/features/auth/actions/server";
 import RootProviders from "./-providers";
-import { FACEBOOK_PIXEL_ID } from "@/features/fpixel/constants";
 import { GTM_ID } from "@/features/gtm/constants";
 
 interface MyRouterContext {
@@ -56,6 +55,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
   f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');
+
+window.dataLayer = window.dataLayer || [];
     `,
       },
     ],

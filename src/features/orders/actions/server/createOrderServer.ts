@@ -79,9 +79,16 @@ export const createOrderServer = createServerFn({
         },
       },
       include: {
-        orderItems: true, // Include orderItems in the response
+        orderItems: {
+          include: {
+            product: true,
+          },
+        }, // Include orderItems in the response
       },
     });
 
-    return newOrder;
+    return {
+      ...newOrder,
+      customer: customerDetails,
+    };
   });
