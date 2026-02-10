@@ -15,6 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
 import { checkIsAuthenticatedServer } from "@/features/auth/actions/server";
 import RootProviders from "./-providers";
+import { FACEBOOK_PIXEL_ID } from "@/features/fpixel/constants";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -52,7 +53,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', ${process.env.FACEBOOK_PIXEL_ID!});
+          fbq('init', ${FACEBOOK_PIXEL_ID});
           fbq('track', 'PageView');
           `,
       },
