@@ -171,6 +171,13 @@ function ProductCard({
                   onClick={() => {
                     addToCart(landingPageProduct.product, quantity);
                     setQuantity(1);
+                    window.fbq("track", "AddToCart", {
+                      content_type: "product",
+                      content_ids: [landingPageProduct.product.id],
+                      content_name: landingPageProduct.product.name,
+                      content_price: landingPageProduct.product.sellPrice,
+                      content_quantity: quantity,
+                    });
                   }}
                   disabled={
                     quantity <= 0 ||
