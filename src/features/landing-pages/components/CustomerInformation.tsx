@@ -90,6 +90,18 @@ export default function CustomerInformation() {
 
           if (success) {
             toast.success("Order placed successfully");
+            window.fbq("track", "Purchase", {
+              value: totalPrice + shippingCharge,
+              currency: "BDT",
+              contents: cartItems.map((item) => ({
+                id: item.product.id,
+                name: item.product.name,
+                quantity: item.quantity,
+                price: item.product.sellPrice,
+              })),
+              content_type: "product",
+              num_items: cartItems.length,
+            });
           } else {
             toast.error("Failed to send order success message");
           }
