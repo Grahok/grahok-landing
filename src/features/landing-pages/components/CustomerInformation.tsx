@@ -18,6 +18,7 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { sendOrderSuccessMessageServer } from "../actions/server/sendOrderSuccessMessageServer";
 import { ActionButton } from "@/components/ui/action-button";
+import { sendOrderSuccessMessageAdminServer } from "../actions/server/sendOrderSuccessMessageAdminServer";
 
 export default function CustomerInformation() {
   const {
@@ -107,6 +108,25 @@ export default function CustomerInformation() {
           }
         } catch (error) {
           toast.error(
+            error instanceof Error
+              ? error.message
+              : "Failed to send order success message",
+          );
+        }
+        try {
+          const { success } = await sendOrderSuccessMessageAdminServer({
+            data: {
+              orderId: order.id,
+              mobileNumber: customerDetails.mobileNumber,
+              customerName: customerDetails.name,
+            },
+          });
+
+          if (!success) {
+            console.error("Failed to send order success message to admin");
+          }
+        } catch (error) {
+          console.error(
             error instanceof Error
               ? error.message
               : "Failed to send order success message",
