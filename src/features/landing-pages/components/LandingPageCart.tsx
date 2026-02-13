@@ -104,14 +104,14 @@ function CartItem({ cartItem }: { cartItem: CartItem }) {
 
         <div className="flex justify-between items-end space-y-2">
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+            <div className="flex items-center gap-1 text-xs mt-1">
               <Badge variant="outline" className="text-xs px-1.5 py-0">
                 {cartItem.quantity}x
               </Badge>
               <span>৳{landingPageProduct.product.sellPrice}</span>
             </div>
 
-            <h4 className="font-semibold">
+            <h4 className="font-semiboldb text-muted-foreground">
               ৳{landingPageProduct.product.sellPrice * cartItem.quantity}
             </h4>
           </div>

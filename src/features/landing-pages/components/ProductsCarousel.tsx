@@ -1,5 +1,6 @@
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -30,16 +31,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ButtonGroup } from "@/components/ui/button-group";
 
-export default function ProductsCarousel() {
+export default function ProductsCarousel({
+  setApi,
+}: {
+  setApi: (api: CarouselApi) => void;
+}) {
   const { landingPage } = useLandingPage();
   const landingPageProducts = landingPage.landingPageProducts;
 
   return (
-    <section className="container mx-auto">
-      <Carousel>
+    <section className="container mx-auto scroll-mt-26">
+      <Carousel setApi={setApi}>
         <CarouselContent>
-          {landingPageProducts.map((landingPageProduct) => (
-            <CarouselItem key={landingPageProduct.id}>
+          {landingPageProducts.map((landingPageProduct, index) => (
+            <CarouselItem id={`product-${index}`} key={landingPageProduct.id}>
               <ProductCard landingPageProduct={landingPageProduct} />
             </CarouselItem>
           ))}

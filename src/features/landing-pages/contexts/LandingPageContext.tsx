@@ -9,7 +9,7 @@ import { createContext, useContext, useState } from "react";
 import { LandingPageProductFaqsType } from "../types/landingPageTypes";
 import { toast } from "sonner";
 
-type LandingPageProductWithTypedFaqs = Omit<
+export type LandingPageProductWithTypedFaqs = Omit<
   LandingPageGetPayload<{
     include: {
       landingPageProducts: {
@@ -78,6 +78,7 @@ export type LandingPageContextType = {
   ) => void;
   clearCart: () => void;
   productPresentInCart: (productId: CartItem["product"]["id"]) => boolean;
+  productsNotPresentInCart: LandingPageProductWithTypedFaqs[];
 
   // Customer Information
   customerDetails: CustomerDetails;
@@ -161,6 +162,10 @@ export const LandingPageProvider = ({
     return cartItems.some((item) => item.product.id === productId);
   };
 
+  const productsNotPresentInCart = landingPage.landingPageProducts.filter(
+    (item) => !productPresentInCart(item.product.id),
+  );
+
   // Customer Information
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
     name: "",
@@ -192,6 +197,7 @@ export const LandingPageProvider = ({
         updateCartItemQuantity,
         clearCart,
         productPresentInCart,
+        productsNotPresentInCart,
         customerDetails,
         setCustomerDetails,
         shippingRegion,
