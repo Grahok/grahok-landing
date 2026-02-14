@@ -46,36 +46,27 @@ function RelatedProductItem({
 }) {
   const { addToCart } = useLandingPage();
   return (
-    <Item variant="outline">
-      <Image
-        className="rounded"
-        src={item.product.images[0]}
-        alt={item.product.name}
-        layout="fullWidth"
-      />
-      <ItemContent className="space-y-4">
-        <div className="space-y-1">
-          <ItemTitle className="text-base">{item.product.name}</ItemTitle>
-          <strong className="text-muted-foreground text-xl">
-            ৳{item.product.sellPrice}
-          </strong>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button
-            variant="outline"
-            onClick={() => api?.scrollTo(index)}
-            asChild
-          >
-            <a href="#">View</a>
-          </Button>
-          <Button
-            onClick={() => addToCart(item.product, 1)}
-            asChild
-          >
+    <Item variant="outline" onClick={() => api?.scrollTo(index)} asChild>
+      <a href="#">
+        <Image
+          className="rounded"
+          src={item.product.images[0]}
+          alt={item.product.name}
+          layout="fullWidth"
+        />
+        <ItemContent className="space-y-4">
+          <div className="space-y-1">
+            <ItemTitle className="text-base">{item.product.name}</ItemTitle>
+            <strong className="text-muted-foreground text-xl">
+              ৳{item.product.sellPrice}
+            </strong>
+          </div>
+
+          <Button onClick={() => addToCart(item.product, 1)} asChild>
             <a href="#order-section">Add to Cart</a>
           </Button>
-        </div>
-      </ItemContent>
+        </ItemContent>
+      </a>
     </Item>
   );
 }
