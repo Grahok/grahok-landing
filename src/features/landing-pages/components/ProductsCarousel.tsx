@@ -43,8 +43,8 @@ export default function ProductsCarousel({
     <section className="container mx-auto scroll-mt-26">
       <Carousel setApi={setApi}>
         <CarouselContent>
-          {landingPageProducts.map((landingPageProduct, index) => (
-            <CarouselItem id={`product-${index}`} key={landingPageProduct.id}>
+          {landingPageProducts.map((landingPageProduct) => (
+            <CarouselItem key={landingPageProduct.id}>
               <ProductCard landingPageProduct={landingPageProduct} />
             </CarouselItem>
           ))}
