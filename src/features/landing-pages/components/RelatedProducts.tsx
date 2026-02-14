@@ -62,9 +62,12 @@ function RelatedProductItem({
             </strong>
           </div>
 
-          <Button onClick={() => addToCart(item.product, 1)} asChild>
-            <a href="#order-section">Add to Cart</a>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button variant="outline">View</Button>
+            <Button onClick={() => addToCart(item.product, 1)} asChild>
+              <a href="#order-section">Add to Cart</a>
+            </Button>
+          </div>
         </ItemContent>
       </a>
     </Item>
