@@ -1,9 +1,10 @@
 import { prisma } from "@/db";
 import { createServerFn } from "@tanstack/react-start";
 import { landingPageProductFaqsSchema } from "../../types/landingPageTypes";
+import { LandingPageModel } from "@/generated/prisma/models";
 
 export const getLandingPageBySlugServer = createServerFn()
-  .inputValidator((data: { slug: string }) => data)
+  .inputValidator((data: { slug: LandingPageModel["slug"] }) => data)
   .handler(async ({ data }) => {
     const landingPage = await prisma.landingPage.findUnique({
       where: {

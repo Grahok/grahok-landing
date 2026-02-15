@@ -1,6 +1,4 @@
 import { ProductModel } from "@/generated/prisma/models";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getProductServer } from "../actions/server/getProductServer";
 import { createOrEditProductSchema } from "../types/productTypes";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
@@ -17,18 +15,10 @@ import { updateProductServer } from "../actions/server/updateProductServer";
 import { ActionButton } from "@/components/ui/action-button";
 
 export default function EditProductForm({
-  productId,
+  product,
 }: {
-  productId: ProductModel["id"];
+  product: ProductModel;
 }) {
-  const { data: product } = useSuspenseQuery({
-    queryKey: ["product", productId],
-    queryFn: async () =>
-      await getProductServer({
-        data: productId,
-      }),
-  });
-
   const form = useForm({
     defaultValues: {
       name: product.name,
@@ -43,7 +33,7 @@ export default function EditProductForm({
       try {
         await updateProductServer({
           data: {
-            productId,
+            productId: product.id,
             updatedData: value,
           },
         });

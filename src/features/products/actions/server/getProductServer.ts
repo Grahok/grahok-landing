@@ -1,7 +1,6 @@
 import { ProductFindUniqueArgs } from "@/generated/prisma/models";
 import { prisma } from "@/db";
 import { createServerFn } from "@tanstack/react-start";
-import { notFound } from "@tanstack/react-router";
 
 export const getProductServer = createServerFn()
   .inputValidator(
@@ -14,8 +13,5 @@ export const getProductServer = createServerFn()
       },
     });
 
-    if (product == null) {
-      throw notFound();
-    }
     return product;
   });

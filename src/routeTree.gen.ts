@@ -24,6 +24,7 @@ import { Route as DashboardLandingPagesAddIndexRouteImport } from './routes/dash
 import { Route as DashboardProductsEditProductIdRouteImport } from './routes/dashboard/products/edit/$productId'
 import { Route as DashboardOrdersViewOrderIdRouteImport } from './routes/dashboard/orders/view/$orderId'
 import { Route as DashboardOrdersEditOrderIdRouteImport } from './routes/dashboard/orders/edit/$orderId'
+import { Route as DashboardLandingPagesEditLandingPageSlugRouteImport } from './routes/dashboard/landing-pages/edit/$landingPageSlug'
 
 const DashboardRouteRoute = DashboardRouteRouteImport.update({
   id: '/dashboard',
@@ -107,6 +108,12 @@ const DashboardOrdersEditOrderIdRoute =
     path: '/orders/edit/$orderId',
     getParentRoute: () => DashboardRouteRoute,
   } as any)
+const DashboardLandingPagesEditLandingPageSlugRoute =
+  DashboardLandingPagesEditLandingPageSlugRouteImport.update({
+    id: '/landing-pages/edit/$landingPageSlug',
+    path: '/landing-pages/edit/$landingPageSlug',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/landing-page/$landingPageSlug': typeof publicLandingPageLandingPageSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/sign-up/': typeof authSignUpIndexRoute
+  '/dashboard/landing-pages/edit/$landingPageSlug': typeof DashboardLandingPagesEditLandingPageSlugRoute
   '/dashboard/orders/edit/$orderId': typeof DashboardOrdersEditOrderIdRoute
   '/dashboard/orders/view/$orderId': typeof DashboardOrdersViewOrderIdRoute
   '/dashboard/products/edit/$productId': typeof DashboardProductsEditProductIdRoute
@@ -130,6 +138,7 @@ export interface FileRoutesByTo {
   '/landing-page/$landingPageSlug': typeof publicLandingPageLandingPageSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/sign-up': typeof authSignUpIndexRoute
+  '/dashboard/landing-pages/edit/$landingPageSlug': typeof DashboardLandingPagesEditLandingPageSlugRoute
   '/dashboard/orders/edit/$orderId': typeof DashboardOrdersEditOrderIdRoute
   '/dashboard/orders/view/$orderId': typeof DashboardOrdersViewOrderIdRoute
   '/dashboard/products/edit/$productId': typeof DashboardProductsEditProductIdRoute
@@ -148,6 +157,7 @@ export interface FileRoutesById {
   '/(public)/landing-page/$landingPageSlug': typeof publicLandingPageLandingPageSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/(auth)/sign-up/': typeof authSignUpIndexRoute
+  '/dashboard/landing-pages/edit/$landingPageSlug': typeof DashboardLandingPagesEditLandingPageSlugRoute
   '/dashboard/orders/edit/$orderId': typeof DashboardOrdersEditOrderIdRoute
   '/dashboard/orders/view/$orderId': typeof DashboardOrdersViewOrderIdRoute
   '/dashboard/products/edit/$productId': typeof DashboardProductsEditProductIdRoute
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/landing-page/$landingPageSlug'
     | '/api/auth/$'
     | '/sign-up/'
+    | '/dashboard/landing-pages/edit/$landingPageSlug'
     | '/dashboard/orders/edit/$orderId'
     | '/dashboard/orders/view/$orderId'
     | '/dashboard/products/edit/$productId'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/landing-page/$landingPageSlug'
     | '/api/auth/$'
     | '/sign-up'
+    | '/dashboard/landing-pages/edit/$landingPageSlug'
     | '/dashboard/orders/edit/$orderId'
     | '/dashboard/orders/view/$orderId'
     | '/dashboard/products/edit/$productId'
@@ -199,6 +211,7 @@ export interface FileRouteTypes {
     | '/(public)/landing-page/$landingPageSlug'
     | '/api/auth/$'
     | '/(auth)/sign-up/'
+    | '/dashboard/landing-pages/edit/$landingPageSlug'
     | '/dashboard/orders/edit/$orderId'
     | '/dashboard/orders/view/$orderId'
     | '/dashboard/products/edit/$productId'
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardOrdersEditOrderIdRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/dashboard/landing-pages/edit/$landingPageSlug': {
+      id: '/dashboard/landing-pages/edit/$landingPageSlug'
+      path: '/landing-pages/edit/$landingPageSlug'
+      fullPath: '/dashboard/landing-pages/edit/$landingPageSlug'
+      preLoaderRoute: typeof DashboardLandingPagesEditLandingPageSlugRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
   }
 }
 
@@ -341,6 +361,7 @@ const publicRouteRouteWithChildren = publicRouteRoute._addFileChildren(
 )
 
 interface DashboardRouteRouteChildren {
+  DashboardLandingPagesEditLandingPageSlugRoute: typeof DashboardLandingPagesEditLandingPageSlugRoute
   DashboardOrdersEditOrderIdRoute: typeof DashboardOrdersEditOrderIdRoute
   DashboardOrdersViewOrderIdRoute: typeof DashboardOrdersViewOrderIdRoute
   DashboardProductsEditProductIdRoute: typeof DashboardProductsEditProductIdRoute
@@ -353,6 +374,8 @@ interface DashboardRouteRouteChildren {
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardLandingPagesEditLandingPageSlugRoute:
+    DashboardLandingPagesEditLandingPageSlugRoute,
   DashboardOrdersEditOrderIdRoute: DashboardOrdersEditOrderIdRoute,
   DashboardOrdersViewOrderIdRoute: DashboardOrdersViewOrderIdRoute,
   DashboardProductsEditProductIdRoute: DashboardProductsEditProductIdRoute,
