@@ -21,8 +21,10 @@ import { Image } from "@unpic/react";
 import { Table, TableCell, TableHead, TableRow } from "@/components/ui/table";
 
 export default function OrderDetails({
+  pdfRef,
   orderId,
 }: {
+  pdfRef: RefObject<HTMLDivElement>(null);
   orderId: OrderModel["id"];
 }) {
   const { data: order } = useSuspenseQuery({
@@ -33,7 +35,7 @@ export default function OrderDetails({
       }),
   });
   return (
-    <section className="space-y-6 border rounded-md p-4">
+    <section className="space-y-6 border rounded-md p-4" ref={pdfRef}>
       <div className="flex items-center gap-4">
         <h1 className="text-3xl font-bold">Order #{orderId}</h1>
         <Badge
