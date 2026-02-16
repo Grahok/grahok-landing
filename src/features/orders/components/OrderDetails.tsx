@@ -24,7 +24,7 @@ export default function OrderDetails({
   pdfRef,
   orderId,
 }: {
-  pdfRef: RefObject<HTMLDivElement>(null);
+  pdfRef: RefObject<HTMLDivElement | null>;
   orderId: OrderModel["id"];
 }) {
   const { data: order } = useSuspenseQuery({
