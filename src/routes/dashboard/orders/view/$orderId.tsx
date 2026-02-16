@@ -24,7 +24,7 @@ function RouteComponent() {
     <section className="space-y-6">
       <div className="flex items-center gap-3">
       <h1 className="text-3xl font-bold">Order Details</h1>
-      <Button onClick={() => toPDF()}></Button>
+      <Button onClick={() => toPDF()}>Download PDF</Button>
       </div>
       <Suspense fallback={<Spinner />}>
         <OrderDetails pdfRef={targetRef} orderId={orderId} />
