@@ -22,15 +22,8 @@ export const updateLandingPageServer = createServerFn({
         name: data.updatedData.name,
         slug: data.updatedData.slug,
         landingPageProducts: {
-          updateMany: data.updatedData.landingPageProducts.map((product) => ({
-            where: {
-              productId: product.productId,
-            },
-            data: {
-              description: product.description,
-              faqs: product.faqs,
-            },
-          })),
+          deleteMany: {},
+          create: data.updatedData.landingPageProducts,
         },
         shippingInsideDhaka: data.updatedData.shippingInsideDhaka,
         shippingOutsideDhaka: data.updatedData.shippingOutsideDhaka,
