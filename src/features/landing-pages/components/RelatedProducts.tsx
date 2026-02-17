@@ -21,13 +21,8 @@ export default function RelatedProducts({ api }: { api: CarouselApi }) {
       </CardHeader>
       <CardContent className="space-y-6">
         <ItemGroup className="grid grid-cols-2 2xl:grid-cols-3 gap-4">
-          {productsNotPresentInCart.map((item, index) => (
-            <RelatedProductItem
-              index={index}
-              key={item.product.id}
-              api={api}
-              item={item}
-            />
+          {productsNotPresentInCart.map((item) => (
+            <RelatedProductItem key={item.product.id} api={api} item={item} />
           ))}
         </ItemGroup>
       </CardContent>
@@ -36,17 +31,24 @@ export default function RelatedProducts({ api }: { api: CarouselApi }) {
 }
 
 function RelatedProductItem({
-  index,
   item,
   api,
 }: {
-  index: number;
   item: LandingPageProductWithTypedFaqs;
   api: CarouselApi;
 }) {
-  const { addToCart } = useLandingPage();
+  const {
+    landingPage: { landingPageProducts },
+    addToCart,
+  } = useLandingPage();
+  function handleCarouselScroll() {
+    const index = landingPageProducts.findIndex(
+      (product) => product.product.id === item.product.id,
+    );
+    api?.scrollTo(index);
+  }
   return (
-    <Item variant="outline" onClick={() => api?.scrollTo(index)} asChild>
+    <Item variant="outline" onClick={handleCarouselScroll} asChild>
       <a href="#">
         <Image
           className="rounded"
