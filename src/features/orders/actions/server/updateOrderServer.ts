@@ -80,6 +80,7 @@ export const updateOrderServer = createServerFn({
         // The Magic Part: Creating the relations
         // Prisma will create these OrderItem records AND insert the new order.id into them automatically.
         orderItems: {
+          deleteMany: {},
           create: orderItemsData,
         },
       },
