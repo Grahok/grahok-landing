@@ -1,10 +1,7 @@
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { getOrderServer } from "@/features/orders/actions/server/getOrderServer";
 import OrderDetails from "@/features/orders/components/OrderDetails";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
-import { createFileRoute } from "@tanstack/react-router";
-import { usePDF } from 'react-to-pdf';
-import { Suspense } from "react";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard/orders/view/$orderId")({
   head: () =>
@@ -15,20 +12,24 @@ export const Route = createFileRoute("/dashboard/orders/view/$orderId")({
   params: {
     parse: ({ orderId }) => ({ orderId: Number(orderId) }),
   },
+  loader: async ({ params, context: { queryClient } }) => {
+    const order = await queryClient.ensureQueryData({
+      queryKey: ["order", params.orderId],
+      queryFn: async () =>
+        await getOrderServer({
+          data: params.orderId,
+        }),
+    });
+    if (!order) {
+      throw notFound();
+    }
+    return {
+      order,
+    };
+  },
 });
 
 function RouteComponent() {
-  const { orderId }: { orderId: number } = Route.useParams();
-  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
-  return (
-    <section className="space-y-6">
-      <div className="flex items-center gap-3">
-      <h1 className="text-3xl font-bold">Order Details</h1>
-      <Button onClick={() => toPDF()}>Download PDF</Button>
-      </div>
-      <Suspense fallback={<Spinner />}>
-        <OrderDetails pdfRef={targetRef} orderId={orderId} />
-      </Suspense>
-    </section>
-  );
+  const { order } = Route.useLoaderData();
+  return <OrderDetails order={order} />;
 }

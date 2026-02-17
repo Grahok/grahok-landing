@@ -1,7 +1,6 @@
 import { OrderFindUniqueArgs } from "@/generated/prisma/models";
 import { prisma } from "@/db";
 import { createServerFn } from "@tanstack/react-start";
-import { notFound } from "@tanstack/react-router";
 import { customerDetailsInOrderSchema } from "../../types/orderTypes";
 
 export const getOrderServer = createServerFn()
@@ -20,8 +19,8 @@ export const getOrderServer = createServerFn()
       },
     });
 
-    if (order == null) {
-      throw notFound();
+    if (!order) {
+      return null;
     }
 
     const customerDetails = customerDetailsInOrderSchema.parse(order.customer);
