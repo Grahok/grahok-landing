@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import {
   createOrEditOrderSchema,
   CreateOrEditOrderType,
+  orderStatuses,
+  TOrderStatus,
 } from "../types/orderTypes";
 import { IconTrash } from "@tabler/icons-react";
 import { toast } from "sonner";
@@ -29,6 +31,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { OrderModel } from "@/generated/prisma/models";
 import { getOrderServer } from "../actions/server/getOrderServer";
 import { updateOrderServer } from "../actions/server/updateOrderServer";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function EditOrderForm({
   orderId,
@@ -117,13 +127,54 @@ export default function EditOrderForm({
 
   return (
     <form
-      id="create-order-form"
+      id="update-order-form"
       className="space-y-6"
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
       }}
     >
+      {/* Order Details Section */}
+      <FieldGroup className="border rounded-md p-4 flex flex-row gap-4 items-center justify-between">
+        <FieldLabel className="text-2xl font-semibold">
+          Order Details
+        </FieldLabel>
+        <form.Field
+          name="orderStatus"
+          children={(field) => (
+            <Field
+              className="w-fit"
+              data-invalid={
+                field.state.meta.isTouched && !field.state.meta.isValid
+              }
+            >
+              <Select
+                name={field.name}
+                value={field.state.value}
+                onValueChange={(value) =>
+                  field.handleChange(value as TOrderStatus)
+                }
+              >
+                <SelectTrigger className="max-w-[180px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {orderStatuses.map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {status}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {field.state.meta.isTouched && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
+            </Field>
+          )}
+        />
+      </FieldGroup>
       {/* Customer Details Section */}
       <FieldGroup className="border rounded-md p-4">
         <FieldLabel className="text-2xl font-semibold">
