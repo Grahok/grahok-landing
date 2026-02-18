@@ -23,7 +23,7 @@ const statusConfig: Record<
   }
 > = {
   pending: { variant: "secondary", label: "Pending", color: "bg-yellow-500" },
-  processing: { variant: "outline", label: "Processing", color: "bg-blue-500" },
+  confirmed: { variant: "outline", label: "Confirmed", color: "bg-blue-500" },
   shipped: { variant: "outline", label: "Shipped", color: "bg-purple-500" },
   delivered: { variant: "default", label: "Delivered", color: "bg-green-500" },
   cancelled: {
