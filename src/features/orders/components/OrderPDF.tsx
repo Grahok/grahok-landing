@@ -9,15 +9,24 @@ import {
 } from "@react-pdf/renderer";
 
 Font.register({
-  family: "Anek Bangla",
-  src: "/fonts/AnekBangla-VariableFont_wdth,wght.ttf",
+  family: "SolaimanLipi",
+  fonts: [
+    {
+      src: "/fonts/SolaimanLipi_22-02-2012.ttf",
+      fontWeight: "normal",
+    },
+    {
+      src: "/fonts/SolaimanLipi_Bold_10-03-12.ttf",
+      fontWeight: "bold",
+    },
+  ],
 });
 
 const styles = StyleSheet.create({
   page: {
     padding: 40,
     fontSize: 11,
-    fontFamily: "Anek Bangla",
+    fontFamily: "SolaimanLipi",
   },
   header: {
     marginBottom: 20,
