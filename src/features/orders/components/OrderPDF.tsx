@@ -1,10 +1,64 @@
-import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Font,
+} from "@react-pdf/renderer";
+
+Font.register({
+  family: "Anek Bangla",
+  fonts: [
+    {
+      src: "/fonts/anek-bangla-bengali-100-normal.ttf",
+      fontWeight: 100,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-200-normal.ttf",
+      fontWeight: 200,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-300-normal.ttf",
+      fontWeight: 300,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-400-normal.ttf",
+      fontWeight: 400,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-500-normal.ttf",
+      fontWeight: 500,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-600-normal.ttf",
+      fontWeight: 600,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-700-normal.ttf",
+      fontWeight: 700,
+      fontStyle: "normal",
+    },
+    {
+      src: "/fonts/anek-bangla-bengali-800-normal.ttf",
+      fontWeight: 800,
+      fontStyle: "normal",
+    },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
     padding: 40,
     fontSize: 11,
-    fontFamily: "Helvetica",
+    fontFamily: "Anek Bangla",
   },
   header: {
     marginBottom: 20,
@@ -127,8 +181,7 @@ const styles = StyleSheet.create({
 
 const statusConfig: Record<string, { bg: string; color: string }> = {
   pending: { bg: "#fef3c7", color: "#92400e" },
-  processing: { bg: "#dbeafe", color: "#1e40af" },
-  shipped: { bg: "#f3e8ff", color: "#6b21a8" },
+  confirmed: { bg: "#dbeafe", color: "#1e40af" },
   delivered: { bg: "#dcfce7", color: "#166534" },
   cancelled: { bg: "#fee2e2", color: "#991b1b" },
 };
@@ -215,14 +268,24 @@ export default function OrderPDF({ order }: Props) {
             </View>
           </View>
 
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginTop: 16 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              marginTop: 16,
+            }}
+          >
             <View>
               <Text style={styles.title}>Order #{order.id}</Text>
-              <Text style={styles.subtitle}>Placed on {formatDate(order.createdAt)}</Text>
+              <Text style={styles.subtitle}>
+                Placed on {formatDate(order.createdAt)}
+              </Text>
             </View>
             <View style={[styles.statusBadge, { backgroundColor: status.bg }]}>
               <Text style={[styles.statusText, { color: status.color }]}>
-                {order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1)}
+                {order.orderStatus.charAt(0).toUpperCase() +
+                  order.orderStatus.slice(1)}
               </Text>
             </View>
           </View>
@@ -262,7 +325,9 @@ export default function OrderPDF({ order }: Props) {
                 <Text style={styles.col1}>{item.product.name}</Text>
                 <Text style={styles.col2}>{item.quantity}</Text>
                 <Text style={styles.col3}>{formatCurrency(item.price)}</Text>
-                <Text style={styles.col4}>{formatCurrency(item.price * item.quantity)}</Text>
+                <Text style={styles.col4}>
+                  {formatCurrency(item.price * item.quantity)}
+                </Text>
               </View>
             ))}
           </View>
@@ -277,7 +342,9 @@ export default function OrderPDF({ order }: Props) {
           <View style={styles.row}>
             <Text style={styles.label}>Shipping</Text>
             <Text style={styles.value}>
-              {order.shippingCharge > 0 ? formatCurrency(order.shippingCharge) : "Free"}
+              {order.shippingCharge > 0
+                ? formatCurrency(order.shippingCharge)
+                : "Free"}
             </Text>
           </View>
           <View style={[styles.row, styles.totalSection]}>

@@ -17,7 +17,7 @@ const orderItemInputSchema = z.object({
   quantity: z.number().int().min(1, "Quantity must be at least 1"),
 });
 
-export const orderStatuses = ["pending", "delivered", "cancelled"] as const;
+export const orderStatuses = ["pending", "confirmed", "delivered", "cancelled"] as const;
 export const shippingRegions = ["inside-dhaka", "outside-dhaka"] as const;
 
 export type TOrderStatus = (typeof orderStatuses)[number];
