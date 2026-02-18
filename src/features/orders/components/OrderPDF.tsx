@@ -10,48 +10,7 @@ import {
 
 Font.register({
   family: "Anek Bangla",
-  fonts: [
-    {
-      src: "/fonts/anek-bangla-bengali-100-normal.ttf",
-      fontWeight: 100,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-200-normal.ttf",
-      fontWeight: 200,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-300-normal.ttf",
-      fontWeight: 300,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-400-normal.ttf",
-      fontWeight: 400,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-500-normal.ttf",
-      fontWeight: 500,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-600-normal.ttf",
-      fontWeight: 600,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-700-normal.ttf",
-      fontWeight: 700,
-      fontStyle: "normal",
-    },
-    {
-      src: "/fonts/anek-bangla-bengali-800-normal.ttf",
-      fontWeight: 800,
-      fontStyle: "normal",
-    },
-  ],
+  src: "/fonts/AnekBangla-VariableFont_wdth,wght.ttf",
 });
 
 const styles = StyleSheet.create({
