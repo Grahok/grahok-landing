@@ -37,3 +37,12 @@ export type LandingPageProductFaqsType = z.infer<
 export type CreateOrEditLandingPageType = z.infer<
   typeof createOrEditLandingPageSchema
 >;
+
+export const duplicateLandingPageSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  slug: z.string().min(1, "Slug is required"),
+});
+
+export type DuplicateLandingPageType = z.infer<
+  typeof duplicateLandingPageSchema
+>;
