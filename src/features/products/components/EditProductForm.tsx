@@ -38,6 +38,7 @@ export default function EditProductForm({
           },
         });
         toast.success("Product Updated Successfully");
+        window.location.reload();
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Failed to update product"
