@@ -17,7 +17,7 @@ import { AddProductsInOrderFormCombobox } from "@/features/orders/components/Add
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getProductsServer } from "@/features/products/actions/server/getProductsServer";
 import { Button } from "@/components/ui/button";
-import { IconTrash } from "@tabler/icons-react";
+import { IconArrowDown, IconArrowUp, IconTrash } from "@tabler/icons-react";
 import { ActionButton } from "@/components/ui/action-button";
 import { LandingPageGetPayload } from "@/generated/prisma/models";
 
@@ -179,13 +179,46 @@ export default function EditLandingPageForm({
                                   <FieldLabel className="text-2xl font-semibold">
                                     {`${index + 1}. ${product?.name}`}
                                   </FieldLabel>
-                                  <Button
-                                    type="button"
-                                    variant="destructive"
-                                    onClick={() => field.removeValue(index)}
-                                  >
-                                    <IconTrash />
-                                  </Button>
+
+                                  <div className="flex items-center gap-2">
+                                    {/* Move Up */}
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      size="icon"
+                                      disabled={index === 0}
+                                      onClick={() =>
+                                        field.moveValue(index, index - 1)
+                                      }
+                                    >
+                                      <IconArrowUp size={18} />
+                                    </Button>
+
+                                    {/* Move Down */}
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      size="icon"
+                                      disabled={
+                                        index === field.state.value.length - 1
+                                      }
+                                      onClick={() =>
+                                        field.moveValue(index, index + 1)
+                                      }
+                                    >
+                                      <IconArrowDown size={18} />
+                                    </Button>
+
+                                    {/* Delete */}
+                                    <Button
+                                      type="button"
+                                      variant="destructive"
+                                      size="icon"
+                                      onClick={() => field.removeValue(index)}
+                                    >
+                                      <IconTrash size={18} />
+                                    </Button>
+                                  </div>
                                 </div>
                               );
                             }}
