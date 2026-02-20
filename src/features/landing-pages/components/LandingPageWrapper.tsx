@@ -16,14 +16,12 @@ export default function LandingPageWrapper() {
         <ProductsCarousel setApi={setApi} />
         <section
           id="order-section"
-          className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 scroll-mt-26"
+          className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 scroll-mt-26"
         >
-          <div className="space-y-12">
-            <LandingPageCart />
-            <RelatedProducts api={api} />
-            <CustomerInformation />
-          </div>
+          <LandingPageCart />
+          <CustomerInformation />
           <OrderSummary />
+          <RelatedProducts api={api} />
         </section>
       </section>
       <Footer />

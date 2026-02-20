@@ -12,7 +12,7 @@ import { CarouselApi } from "@/components/ui/carousel";
 export default function RelatedProducts({ api }: { api: CarouselApi }) {
   const { productsNotPresentInCart } = useLandingPage();
   return (
-    <Card>
+    <Card className="lg:row-start-2 lg:col-start-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <IconBox className="h-5 w-5" />

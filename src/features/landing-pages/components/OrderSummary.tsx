@@ -27,7 +27,7 @@ export default function OrderSummary() {
   const total = subtotal + shippingCharge;
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 lg:row-start-1 lg:col-start-2">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Order Summary</CardTitle>

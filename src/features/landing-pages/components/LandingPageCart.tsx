@@ -25,7 +25,7 @@ export default function LandingPageCart() {
   const { cartItems } = useLandingPage();
 
   return (
-    <Card>
+    <Card className="lg:col-start-1 lg:row-start-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <IconShoppingBag className="h-5 w-5" />

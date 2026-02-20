@@ -144,7 +144,7 @@ export default function CustomerInformation() {
   }
 
   return (
-    <Card>
+    <Card className="lg:row-start-3 lg:col-start-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <IconUser className="h-5 w-5" />
