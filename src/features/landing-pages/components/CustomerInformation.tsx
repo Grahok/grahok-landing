@@ -14,11 +14,19 @@ import {
   IconAlertCircle,
   IconCircleCheck,
 } from "@tabler/icons-react";
-import { Field, FieldGroup } from "@/components/ui/field";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldTitle,
+} from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { sendOrderSuccessMessageServer } from "../actions/server/sendOrderSuccessMessageServer";
 import { ActionButton } from "@/components/ui/action-button";
 import { sendOrderSuccessMessageAdminServer } from "../actions/server/sendOrderSuccessMessageAdminServer";
+import { TShippingRegion } from "@/features/orders/types/orderTypes";
 
 export default function CustomerInformation() {
   const {
@@ -229,27 +237,32 @@ export default function CustomerInformation() {
             <RadioGroup
               value={shippingRegion}
               onValueChange={(value) =>
-                setShippingRegion(value as "inside-dhaka" | "outside-dhaka")
+                setShippingRegion(value as TShippingRegion)
               }
+              className="grid grid-cols-2"
             >
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
+              <FieldLabel htmlFor="inside-dhaka">
+                <Field orientation="horizontal">
+                  <FieldContent>
+                    <FieldTitle>Inside Dhaka</FieldTitle>
+                    <FieldDescription>
+                      ৳{landingPage.shippingInsideDhaka}
+                    </FieldDescription>
+                  </FieldContent>
                   <RadioGroupItem value="inside-dhaka" id="inside-dhaka" />
-                  <Label htmlFor="inside-dhaka">Inside Dhaka</Label>
-                </div>
-                <span className="text-sm font-medium">
-                  ৳{landingPage.shippingInsideDhaka}
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
+                </Field>
+              </FieldLabel>
+              <FieldLabel htmlFor="outside-dhaka">
+                <Field orientation="horizontal">
+                  <FieldContent>
+                    <FieldTitle>Outside Dhaka</FieldTitle>
+                    <FieldDescription>
+                      ৳{landingPage.shippingOutsideDhaka}
+                    </FieldDescription>
+                  </FieldContent>
                   <RadioGroupItem value="outside-dhaka" id="outside-dhaka" />
-                  <Label htmlFor="outside-dhaka">Outside Dhaka</Label>
-                </div>
-                <span className="text-sm font-medium">
-                  ৳{landingPage.shippingOutsideDhaka}
-                </span>
-              </div>
+                </Field>
+              </FieldLabel>
             </RadioGroup>
           </Field>
         </FieldGroup>
