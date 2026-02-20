@@ -13,7 +13,13 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { IconEye, IconPackages, IconPencil, IconTrash } from "@tabler/icons-react";
+import {
+  IconCopy,
+  IconEye,
+  IconPackages,
+  IconPencil,
+  IconTrash,
+} from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { LandingPageModel } from "@/generated/prisma/models";
@@ -21,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { ActionButton } from "@/components/ui/action-button";
 import { deleteLandingPageServer } from "../actions/server/deleteLandingPageServer";
 import { toast } from "sonner";
+import LandingPageDuplicationDialog from "./LandingPageDuplicationDialog";
 
 export default function AllLandingPagesTable() {
   const { data: landingPages } = useSuspenseQuery({
@@ -108,6 +115,12 @@ function LandingPagesTableActions({
           <IconPencil />
         </Link>
       </Button>
+      <LandingPageDuplicationDialog landingPageSlug={landingPage.slug}>
+        <Button size="icon">
+          <IconCopy />
+        </Button>
+      </LandingPageDuplicationDialog>
+
       <ActionButton
         action={async () => await handleDeleteLandingPage(landingPage.id)}
         requireAreYouSure
