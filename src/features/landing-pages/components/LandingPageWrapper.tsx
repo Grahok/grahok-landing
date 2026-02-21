@@ -7,18 +7,20 @@ import RelatedProducts from "./RelatedProducts";
 import { CarouselApi } from "@/components/ui/carousel";
 import { useState } from "react";
 import Footer from "./Footer";
+import { useLandingPage } from "../contexts/LandingPageContext";
 
 export default function LandingPageWrapper() {
   const [api, setApi] = useState<CarouselApi>();
+  const { productsNotPresentInCart } = useLandingPage();
   return (
     <>
       <section className="p-4 space-y-12">
         <ProductsCarousel setApi={setApi} />
-        <section
-          className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"
-        >
+        <section className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-12">
-            <RelatedProducts api={api} />
+            {productsNotPresentInCart.length > 0 && (
+              <RelatedProducts api={api} />
+            )}
             <LandingPageCart />
             <CustomerInformation />
           </div>
