@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import { Analytics } from "@vercel/analytics/react";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
@@ -96,6 +97,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             />
           )}
           <Toaster richColors closeButton />
+          <Analytics />
         </RootProviders>
         <Scripts />
         {/* <noscript>
