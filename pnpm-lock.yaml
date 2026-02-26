@@ -116,6 +116,9 @@ importers:
       '@unpic/react':
         specifier: ^1.0.2
         version: 1.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@vercel/analytics':
+        specifier: ^1.6.1
+        version: 1.6.1(react@19.2.3)
       '@zxcvbn-ts/core':
         specifier: ^3.0.4
         version: 3.0.4
@@ -2388,6 +2391,32 @@ packages:
       react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
     peerDependenciesMeta:
       next:
+        optional: true
+
+  '@vercel/analytics@1.6.1':
+    resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
         optional: true
 
   '@vitejs/plugin-react@5.1.2':
@@ -6342,6 +6371,10 @@ snapshots:
       '@unpic/core': 1.0.3
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+
+  '@vercel/analytics@1.6.1(react@19.2.3)':
+    optionalDependencies:
+      react: 19.2.3
 
   '@vitejs/plugin-react@5.1.2(vite@7.3.1(@types/node@22.19.7)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))':
     dependencies:
