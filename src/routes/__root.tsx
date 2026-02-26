@@ -5,7 +5,6 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { Analytics } from "@vercel/analytics/react";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
@@ -97,17 +96,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             />
           )}
           <Toaster richColors closeButton />
-          <Analytics />
         </RootProviders>
         <Scripts />
-        {/* <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
-          />
-        </noscript> */}
       </body>
     </html>
   );

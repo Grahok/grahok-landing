@@ -83,6 +83,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
   },
+  customerInfo: {
+    flexDirection: "row",
+    gap: 4,
+    paddingVertical: 4,
+  },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -159,7 +164,7 @@ const CONTACT_MOBILE = import.meta.env.VITE_CONTACT_MOBILE_NUMBER;
 const CONTACT_ADDRESS = import.meta.env.VITE_CONTACT_ADDRESS;
 
 function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-BD", {
+  return new Intl.NumberFormat("bn-BD", {
     style: "currency",
     currency: "BDT",
     maximumFractionDigits: 0,
@@ -261,19 +266,19 @@ export default function OrderPDF({ order }: Props) {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Customer Information</Text>
-          <View style={styles.row}>
+          <View style={styles.customerInfo}>
             <Text style={styles.label}>Name:</Text>
             <Text style={styles.value}>{order.customer.name}</Text>
           </View>
-          <View style={styles.row}>
+          <View style={styles.customerInfo}>
             <Text style={styles.label}>Phone:</Text>
             <Text style={styles.value}>{order.customer.mobileNumber}</Text>
           </View>
-          <View style={styles.row}>
+          <View style={styles.customerInfo}>
             <Text style={styles.label}>Address:</Text>
             <Text style={styles.value}>{order.customer.address}</Text>
           </View>
-          <View style={styles.row}>
+          <View style={styles.customerInfo}>
             <Text style={styles.label}>Shipping Region:</Text>
             <Text style={styles.value}>{order.shippingRegion || "N/A"}</Text>
           </View>
