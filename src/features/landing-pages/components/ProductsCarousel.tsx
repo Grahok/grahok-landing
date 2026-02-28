@@ -229,7 +229,7 @@ function ProductCard({
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="px-4 pb-4">
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-base text-muted-foreground leading-relaxed">
                         {faq.answer}
                       </p>
                     </AccordionContent>
