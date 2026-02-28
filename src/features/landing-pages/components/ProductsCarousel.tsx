@@ -225,7 +225,7 @@ function ProductCard({
                     value={`faq-${index}`}
                     className="border-b last:border-b-0"
                   >
-                    <AccordionTrigger className="px-4 hover:no-underline">
+                    <AccordionTrigger className="px-4 hover:no-underline text-xl">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="px-4 pb-4">
