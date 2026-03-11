@@ -55,8 +55,35 @@ export const createOrderServer = createServerFn({
       };
     });
 
+    // Calculate subtotal (without shipping)
+    const subtotal = calculatedTotalPrice;
+
+    // 3. Check for active offers and apply free shipping if threshold is met
+    let finalShippingCharge = data.shippingCharge;
+    
+    if (data.landingPageId) {
+      const activeOffer = await prisma.offer.findFirst({
+        where: {
+          isActive: true,
+          type: "FREE_SHIPPING",
+          threshold: {
+            not: null,
+          },
+          landingPages: {
+            some: {
+              id: data.landingPageId,
+            },
+          },
+        },
+      });
+
+      if (activeOffer && activeOffer.threshold && subtotal >= activeOffer.threshold) {
+        finalShippingCharge = 0;
+      }
+    }
+
     // Add shipping to the backend-calculated total
-    calculatedTotalPrice += data.shippingCharge;
+    calculatedTotalPrice += finalShippingCharge;
 
     // 3. Perform the Transaction
     // Prisma handles of "Foreign Key" linking automatically via nested 'create'
@@ -68,7 +95,7 @@ export const createOrderServer = createServerFn({
 
         // Use of secure, calculated total
         totalPrice: calculatedTotalPrice,
-        shippingCharge: data.shippingCharge,
+        shippingCharge: finalShippingCharge,
         orderStatus: data.orderStatus,
         landingPageId: data.landingPageId,
 

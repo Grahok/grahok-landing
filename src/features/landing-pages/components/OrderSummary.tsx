@@ -14,17 +14,23 @@ import {
   IconUser,
   IconPhone,
   IconMapPin,
+  IconTruck,
 } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
+import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
+import { Item, ItemContent } from "@/components/ui/item";
 
 export default function OrderSummary() {
   const { cartItems, customerDetails, getShippingCharge } = useLandingPage();
+  const { offer, isThresholdMet } = useLandingPageOffer();
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.product.sellPrice,
     0,
   );
   const shippingCharge = getShippingCharge();
-  const total = subtotal + shippingCharge;
+  const isFreeShipping = isThresholdMet(subtotal);
+  const finalShippingCharge = isFreeShipping ? 0 : shippingCharge;
+  const total = subtotal + finalShippingCharge;
 
   return (
     <section className="space-y-6">
@@ -98,10 +104,37 @@ export default function OrderSummary() {
               <span className="text-muted-foreground">Subtotal</span>
               <span className="font-medium">৳{subtotal}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Shipping</span>
-              <span className="font-medium">৳{shippingCharge}</span>
-            </div>
+            {offer && offer.type === "FREE_SHIPPING" && offer.threshold && (
+              <div className="flex justify-between text-sm items-center">
+                <span className="text-muted-foreground">Shipping</span>
+                <div className="flex items-center gap-2">
+                  {isFreeShipping ? (
+                    <Badge variant="secondary" className="gap-1">
+                      <IconTruck className="h-3 w-3" />
+                      Free
+                    </Badge>
+                  ) : (
+                    <span className="font-medium">৳{shippingCharge}</span>
+                  )}
+                </div>
+              </div>
+            )}
+            {!isFreeShipping &&
+              offer &&
+              offer.type === "FREE_SHIPPING" &&
+              offer.threshold && (
+                <Item variant="muted" className="bg-green-700">
+                  <ItemContent className="font-semibold">
+                    Add ৳{offer.threshold - subtotal} more for free shipping!
+                  </ItemContent>
+                </Item>
+              )}
+            {(!offer || offer.type !== "FREE_SHIPPING") && (
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Shipping</span>
+                <span className="font-medium">৳{shippingCharge}</span>
+              </div>
+            )}
             <Separator />
             <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
@@ -130,9 +163,9 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
           {landingPageProduct.product.name}
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-        <Badge variant="outline" className="text-xs px-1.5 py-0">
-          {cartItem.quantity}x
-        </Badge>
+          <Badge variant="outline" className="text-xs px-1.5 py-0">
+            {cartItem.quantity}x
+          </Badge>
           <span>৳{landingPageProduct.product.sellPrice}</span>
         </div>
       </div>

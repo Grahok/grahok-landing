@@ -8,12 +8,23 @@ import { CarouselApi } from "@/components/ui/carousel";
 import { useState } from "react";
 import Footer from "./Footer";
 import { useLandingPage } from "../contexts/LandingPageContext";
+import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
+import { Marquee } from "@/components/ui/saw/marquee";
 
 export default function LandingPageWrapper() {
   const [api, setApi] = useState<CarouselApi>();
   const { productsNotPresentInCart } = useLandingPage();
+  const { offer } = useLandingPageOffer();
+
   return (
     <>
+      {offer?.bannerText && (
+        <div className="bg-primary text-primary-foreground overflow-hidden py-2">
+          <Marquee className="[--duration:20s] [--gap:360px]" pauseOnHover>
+            {offer?.bannerText}
+          </Marquee>
+        </div>
+      )}
       <section className="p-4 space-y-12">
         <ProductsCarousel setApi={setApi} />
         <section className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">

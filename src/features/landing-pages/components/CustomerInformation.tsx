@@ -27,6 +27,7 @@ import { sendOrderSuccessMessageServer } from "../actions/server/sendOrderSucces
 import { ActionButton } from "@/components/ui/action-button";
 import { sendOrderSuccessMessageAdminServer } from "../actions/server/sendOrderSuccessMessageAdminServer";
 import { TShippingRegion } from "@/features/orders/types/orderTypes";
+import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
 
 export default function CustomerInformation() {
   const {
@@ -41,17 +42,27 @@ export default function CustomerInformation() {
     getShippingCharge,
   } = useLandingPage();
 
+  const { offer, isThresholdMet } = useLandingPageOffer();
+
   const isFormValid =
     customerDetails.name &&
     customerDetails.mobileNumber &&
     customerDetails.address &&
     shippingRegion;
   const isCartEmpty = cartItems.length === 0;
-  const totalPrice = cartItems.reduce(
+  const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.product.sellPrice,
     0,
   );
-  const shippingCharge = getShippingCharge();
+  const rawShippingCharge = getShippingCharge();
+  const isFreeShipping =
+    offer &&
+    offer.type === "FREE_SHIPPING" &&
+    offer.threshold &&
+    isThresholdMet(subtotal);
+  const shippingCharge = isFreeShipping ? 0 : rawShippingCharge;
+  const totalPrice = subtotal;
+  const finalTotal = subtotal + shippingCharge;
 
   async function handleCheckOut() {
     if (!isFormValid) {
@@ -85,7 +96,7 @@ export default function CustomerInformation() {
           orderId: order.id,
           cartItems,
           customerDetails,
-          totalAmount: totalPrice + shippingCharge,
+          totalAmount: finalTotal,
         });
 
         toast.success("Order placed successfully");
@@ -232,7 +243,7 @@ export default function CustomerInformation() {
           <Field>
             <Label className="flex items-center gap-2">
               <IconMapPin className="h-4 w-4" />
-              Shipping Location
+              Shipping Location (Home Delivery)
             </Label>
             <RadioGroup
               value={shippingRegion}
@@ -245,7 +256,7 @@ export default function CustomerInformation() {
                 <Field orientation="horizontal">
                   <FieldContent>
                     <FieldTitle>Inside Dhaka</FieldTitle>
-                    <FieldDescription>
+                    <FieldDescription className="text-base font-medium">
                       ৳{landingPage.shippingInsideDhaka}
                     </FieldDescription>
                   </FieldContent>
@@ -256,7 +267,7 @@ export default function CustomerInformation() {
                 <Field orientation="horizontal">
                   <FieldContent>
                     <FieldTitle>Outside Dhaka</FieldTitle>
-                    <FieldDescription>
+                    <FieldDescription className="text-base font-medium">
                       ৳{landingPage.shippingOutsideDhaka}
                     </FieldDescription>
                   </FieldContent>
@@ -292,7 +303,7 @@ export default function CustomerInformation() {
             disabled={!isFormValid || isCartEmpty}
           >
             <IconShoppingBag className="h-4 w-4 mr-2" />
-            Place Order • ৳{totalPrice + shippingCharge}
+            Place Order • ৳{finalTotal}
           </ActionButton>
         </div>
       </CardContent>

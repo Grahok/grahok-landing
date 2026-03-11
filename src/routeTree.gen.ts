@@ -19,11 +19,14 @@ import { Route as DashboardProductsAllIndexRouteImport } from './routes/dashboar
 import { Route as DashboardProductsAddIndexRouteImport } from './routes/dashboard/products/add/index'
 import { Route as DashboardOrdersAllIndexRouteImport } from './routes/dashboard/orders/all/index'
 import { Route as DashboardOrdersAddIndexRouteImport } from './routes/dashboard/orders/add/index'
+import { Route as DashboardOffersAllIndexRouteImport } from './routes/dashboard/offers/all/index'
+import { Route as DashboardOffersAddIndexRouteImport } from './routes/dashboard/offers/add/index'
 import { Route as DashboardLandingPagesAllIndexRouteImport } from './routes/dashboard/landing-pages/all/index'
 import { Route as DashboardLandingPagesAddIndexRouteImport } from './routes/dashboard/landing-pages/add/index'
 import { Route as DashboardProductsEditProductIdRouteImport } from './routes/dashboard/products/edit/$productId'
 import { Route as DashboardOrdersViewOrderIdRouteImport } from './routes/dashboard/orders/view/$orderId'
 import { Route as DashboardOrdersEditOrderIdRouteImport } from './routes/dashboard/orders/edit/$orderId'
+import { Route as DashboardOffersEditOfferIdRouteImport } from './routes/dashboard/offers/edit/$offerId'
 import { Route as DashboardLandingPagesEditLandingPageSlugRouteImport } from './routes/dashboard/landing-pages/edit/$landingPageSlug'
 
 const DashboardRouteRoute = DashboardRouteRouteImport.update({
@@ -78,6 +81,16 @@ const DashboardOrdersAddIndexRoute = DashboardOrdersAddIndexRouteImport.update({
   path: '/orders/add/',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
+const DashboardOffersAllIndexRoute = DashboardOffersAllIndexRouteImport.update({
+  id: '/offers/all/',
+  path: '/offers/all/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+const DashboardOffersAddIndexRoute = DashboardOffersAddIndexRouteImport.update({
+  id: '/offers/add/',
+  path: '/offers/add/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
 const DashboardLandingPagesAllIndexRoute =
   DashboardLandingPagesAllIndexRouteImport.update({
     id: '/landing-pages/all/',
@@ -108,6 +121,12 @@ const DashboardOrdersEditOrderIdRoute =
     path: '/orders/edit/$orderId',
     getParentRoute: () => DashboardRouteRoute,
   } as any)
+const DashboardOffersEditOfferIdRoute =
+  DashboardOffersEditOfferIdRouteImport.update({
+    id: '/offers/edit/$offerId',
+    path: '/offers/edit/$offerId',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
 const DashboardLandingPagesEditLandingPageSlugRoute =
   DashboardLandingPagesEditLandingPageSlugRouteImport.update({
     id: '/landing-pages/edit/$landingPageSlug',
@@ -122,11 +141,14 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/sign-up/': typeof authSignUpIndexRoute
   '/dashboard/landing-pages/edit/$landingPageSlug': typeof DashboardLandingPagesEditLandingPageSlugRoute
+  '/dashboard/offers/edit/$offerId': typeof DashboardOffersEditOfferIdRoute
   '/dashboard/orders/edit/$orderId': typeof DashboardOrdersEditOrderIdRoute
   '/dashboard/orders/view/$orderId': typeof DashboardOrdersViewOrderIdRoute
   '/dashboard/products/edit/$productId': typeof DashboardProductsEditProductIdRoute
   '/dashboard/landing-pages/add/': typeof DashboardLandingPagesAddIndexRoute
   '/dashboard/landing-pages/all/': typeof DashboardLandingPagesAllIndexRoute
+  '/dashboard/offers/add/': typeof DashboardOffersAddIndexRoute
+  '/dashboard/offers/all/': typeof DashboardOffersAllIndexRoute
   '/dashboard/orders/add/': typeof DashboardOrdersAddIndexRoute
   '/dashboard/orders/all/': typeof DashboardOrdersAllIndexRoute
   '/dashboard/products/add/': typeof DashboardProductsAddIndexRoute
@@ -139,11 +161,14 @@ export interface FileRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/sign-up': typeof authSignUpIndexRoute
   '/dashboard/landing-pages/edit/$landingPageSlug': typeof DashboardLandingPagesEditLandingPageSlugRoute
+  '/dashboard/offers/edit/$offerId': typeof DashboardOffersEditOfferIdRoute
   '/dashboard/orders/edit/$orderId': typeof DashboardOrdersEditOrderIdRoute
   '/dashboard/orders/view/$orderId': typeof DashboardOrdersViewOrderIdRoute
   '/dashboard/products/edit/$productId': typeof DashboardProductsEditProductIdRoute
   '/dashboard/landing-pages/add': typeof DashboardLandingPagesAddIndexRoute
   '/dashboard/landing-pages/all': typeof DashboardLandingPagesAllIndexRoute
+  '/dashboard/offers/add': typeof DashboardOffersAddIndexRoute
+  '/dashboard/offers/all': typeof DashboardOffersAllIndexRoute
   '/dashboard/orders/add': typeof DashboardOrdersAddIndexRoute
   '/dashboard/orders/all': typeof DashboardOrdersAllIndexRoute
   '/dashboard/products/add': typeof DashboardProductsAddIndexRoute
@@ -158,11 +183,14 @@ export interface FileRoutesById {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/(auth)/sign-up/': typeof authSignUpIndexRoute
   '/dashboard/landing-pages/edit/$landingPageSlug': typeof DashboardLandingPagesEditLandingPageSlugRoute
+  '/dashboard/offers/edit/$offerId': typeof DashboardOffersEditOfferIdRoute
   '/dashboard/orders/edit/$orderId': typeof DashboardOrdersEditOrderIdRoute
   '/dashboard/orders/view/$orderId': typeof DashboardOrdersViewOrderIdRoute
   '/dashboard/products/edit/$productId': typeof DashboardProductsEditProductIdRoute
   '/dashboard/landing-pages/add/': typeof DashboardLandingPagesAddIndexRoute
   '/dashboard/landing-pages/all/': typeof DashboardLandingPagesAllIndexRoute
+  '/dashboard/offers/add/': typeof DashboardOffersAddIndexRoute
+  '/dashboard/offers/all/': typeof DashboardOffersAllIndexRoute
   '/dashboard/orders/add/': typeof DashboardOrdersAddIndexRoute
   '/dashboard/orders/all/': typeof DashboardOrdersAllIndexRoute
   '/dashboard/products/add/': typeof DashboardProductsAddIndexRoute
@@ -177,11 +205,14 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/sign-up/'
     | '/dashboard/landing-pages/edit/$landingPageSlug'
+    | '/dashboard/offers/edit/$offerId'
     | '/dashboard/orders/edit/$orderId'
     | '/dashboard/orders/view/$orderId'
     | '/dashboard/products/edit/$productId'
     | '/dashboard/landing-pages/add/'
     | '/dashboard/landing-pages/all/'
+    | '/dashboard/offers/add/'
+    | '/dashboard/offers/all/'
     | '/dashboard/orders/add/'
     | '/dashboard/orders/all/'
     | '/dashboard/products/add/'
@@ -194,11 +225,14 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/sign-up'
     | '/dashboard/landing-pages/edit/$landingPageSlug'
+    | '/dashboard/offers/edit/$offerId'
     | '/dashboard/orders/edit/$orderId'
     | '/dashboard/orders/view/$orderId'
     | '/dashboard/products/edit/$productId'
     | '/dashboard/landing-pages/add'
     | '/dashboard/landing-pages/all'
+    | '/dashboard/offers/add'
+    | '/dashboard/offers/all'
     | '/dashboard/orders/add'
     | '/dashboard/orders/all'
     | '/dashboard/products/add'
@@ -212,11 +246,14 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/(auth)/sign-up/'
     | '/dashboard/landing-pages/edit/$landingPageSlug'
+    | '/dashboard/offers/edit/$offerId'
     | '/dashboard/orders/edit/$orderId'
     | '/dashboard/orders/view/$orderId'
     | '/dashboard/products/edit/$productId'
     | '/dashboard/landing-pages/add/'
     | '/dashboard/landing-pages/all/'
+    | '/dashboard/offers/add/'
+    | '/dashboard/offers/all/'
     | '/dashboard/orders/add/'
     | '/dashboard/orders/all/'
     | '/dashboard/products/add/'
@@ -303,6 +340,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardOrdersAddIndexRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/dashboard/offers/all/': {
+      id: '/dashboard/offers/all/'
+      path: '/offers/all'
+      fullPath: '/dashboard/offers/all/'
+      preLoaderRoute: typeof DashboardOffersAllIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/offers/add/': {
+      id: '/dashboard/offers/add/'
+      path: '/offers/add'
+      fullPath: '/dashboard/offers/add/'
+      preLoaderRoute: typeof DashboardOffersAddIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
     '/dashboard/landing-pages/all/': {
       id: '/dashboard/landing-pages/all/'
       path: '/landing-pages/all'
@@ -338,6 +389,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardOrdersEditOrderIdRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/dashboard/offers/edit/$offerId': {
+      id: '/dashboard/offers/edit/$offerId'
+      path: '/offers/edit/$offerId'
+      fullPath: '/dashboard/offers/edit/$offerId'
+      preLoaderRoute: typeof DashboardOffersEditOfferIdRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
     '/dashboard/landing-pages/edit/$landingPageSlug': {
       id: '/dashboard/landing-pages/edit/$landingPageSlug'
       path: '/landing-pages/edit/$landingPageSlug'
@@ -362,11 +420,14 @@ const publicRouteRouteWithChildren = publicRouteRoute._addFileChildren(
 
 interface DashboardRouteRouteChildren {
   DashboardLandingPagesEditLandingPageSlugRoute: typeof DashboardLandingPagesEditLandingPageSlugRoute
+  DashboardOffersEditOfferIdRoute: typeof DashboardOffersEditOfferIdRoute
   DashboardOrdersEditOrderIdRoute: typeof DashboardOrdersEditOrderIdRoute
   DashboardOrdersViewOrderIdRoute: typeof DashboardOrdersViewOrderIdRoute
   DashboardProductsEditProductIdRoute: typeof DashboardProductsEditProductIdRoute
   DashboardLandingPagesAddIndexRoute: typeof DashboardLandingPagesAddIndexRoute
   DashboardLandingPagesAllIndexRoute: typeof DashboardLandingPagesAllIndexRoute
+  DashboardOffersAddIndexRoute: typeof DashboardOffersAddIndexRoute
+  DashboardOffersAllIndexRoute: typeof DashboardOffersAllIndexRoute
   DashboardOrdersAddIndexRoute: typeof DashboardOrdersAddIndexRoute
   DashboardOrdersAllIndexRoute: typeof DashboardOrdersAllIndexRoute
   DashboardProductsAddIndexRoute: typeof DashboardProductsAddIndexRoute
@@ -376,11 +437,14 @@ interface DashboardRouteRouteChildren {
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardLandingPagesEditLandingPageSlugRoute:
     DashboardLandingPagesEditLandingPageSlugRoute,
+  DashboardOffersEditOfferIdRoute: DashboardOffersEditOfferIdRoute,
   DashboardOrdersEditOrderIdRoute: DashboardOrdersEditOrderIdRoute,
   DashboardOrdersViewOrderIdRoute: DashboardOrdersViewOrderIdRoute,
   DashboardProductsEditProductIdRoute: DashboardProductsEditProductIdRoute,
   DashboardLandingPagesAddIndexRoute: DashboardLandingPagesAddIndexRoute,
   DashboardLandingPagesAllIndexRoute: DashboardLandingPagesAllIndexRoute,
+  DashboardOffersAddIndexRoute: DashboardOffersAddIndexRoute,
+  DashboardOffersAllIndexRoute: DashboardOffersAllIndexRoute,
   DashboardOrdersAddIndexRoute: DashboardOrdersAddIndexRoute,
   DashboardOrdersAllIndexRoute: DashboardOrdersAllIndexRoute,
   DashboardProductsAddIndexRoute: DashboardProductsAddIndexRoute,

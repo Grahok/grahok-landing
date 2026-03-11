@@ -36,6 +36,7 @@ import {
   IconDotsVertical,
   IconLogout,
   IconPackages,
+  IconTag,
   IconUser,
   IconUserCircle,
 } from "@tabler/icons-react";
@@ -158,6 +159,31 @@ export default function DashboardSidebar({
                       <SidebarMenuSubItem>
                         <SidebarMenuSubButton asChild>
                           <Link to="/dashboard/landing-pages/add">Add Landing Page</Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+              </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+              <Collapsible defaultOpen className="group/collapsible">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip="Offers">
+                      <IconTag />
+                      <span>Offers</span>
+                      <IconChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton asChild>
+                          <Link to="/dashboard/offers/all">All Offers</Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton asChild>
+                          <Link to="/dashboard/offers/add">Add Offer</Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     </SidebarMenuSub>

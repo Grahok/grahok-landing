@@ -17,7 +17,6 @@ export default function OrderSuccessModal() {
     orderDetails,
     clearCart,
     setCustomerDetails,
-    getShippingCharge,
   } = useLandingPage();
 
   const handleClose = () => {
@@ -84,7 +83,7 @@ export default function OrderSuccessModal() {
                   Shipping Charge
                 </span>
                 <span className="font-semibold text-gray-900 whitespace-nowrap">
-                  ৳ {getShippingCharge()}
+                  ৳ {orderDetails.totalAmount - orderDetails.cartItems.reduce((acc, item) => acc + item.quantity * item.product.sellPrice, 0)}
                 </span>
               </div>
               <div className="border-t pt-2 flex justify-between items-center font-bold text-gray-900">
