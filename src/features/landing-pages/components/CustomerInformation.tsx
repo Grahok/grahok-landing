@@ -100,6 +100,7 @@ export default function CustomerInformation() {
         });
 
         toast.success("Order placed successfully");
+        setIsOrderSuccessModalOpen(true);
         window.dataLayer.push({
           event: "purchase",
           transaction_id: order.id,
@@ -151,7 +152,6 @@ export default function CustomerInformation() {
               : "Failed to send order success message",
           );
         }
-        setIsOrderSuccessModalOpen(true);
       } else {
         toast.error("Failed to place order");
       }
