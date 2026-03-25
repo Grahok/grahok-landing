@@ -20,6 +20,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Badge } from "@/components/ui/badge";
+import React from "react";
 
 export default function LandingPageCart() {
   const { cartItems } = useLandingPage();
@@ -62,7 +63,11 @@ export default function LandingPageCart() {
   );
 }
 
-function CartItem({ cartItem }: { cartItem: CartItem }) {
+const CartItem = React.memo(function CartItem({
+  cartItem,
+}: {
+  cartItem: CartItem;
+}) {
   const {
     landingPage,
     incrementCartItemQuantity,
@@ -151,4 +156,4 @@ function CartItem({ cartItem }: { cartItem: CartItem }) {
       </div>
     </div>
   );
-}
+});

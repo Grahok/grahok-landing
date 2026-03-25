@@ -5,7 +5,7 @@ import {
   OrderModel,
   ProductModel,
 } from "@/generated/prisma/models";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { LandingPageProductFaqsType } from "../types/landingPageTypes";
 import { toast } from "sonner";
 
@@ -185,30 +185,54 @@ export const LandingPageProvider = ({
   // Order Success Modal
   const [isOrderSuccessModalOpen, setIsOrderSuccessModalOpen] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
+
+  const contextValue = useMemo(
+    () => ({
+      landingPage,
+      cartItems,
+      addToCart,
+      removeFromCart,
+      incrementCartItemQuantity,
+      decrementCartItemQuantity,
+      updateCartItemQuantity,
+      clearCart,
+      productPresentInCart,
+      productsNotPresentInCart,
+      customerDetails,
+      setCustomerDetails,
+      shippingRegion,
+      setShippingRegion,
+      getShippingCharge,
+      isOrderSuccessModalOpen,
+      setIsOrderSuccessModalOpen,
+      orderDetails,
+      setOrderDetails,
+    }),
+    [
+      landingPage,
+      cartItems,
+      addToCart,
+      removeFromCart,
+      incrementCartItemQuantity,
+      decrementCartItemQuantity,
+      updateCartItemQuantity,
+      clearCart,
+      productPresentInCart,
+      productsNotPresentInCart,
+      customerDetails,
+      setCustomerDetails,
+      shippingRegion,
+      setShippingRegion,
+      getShippingCharge,
+      isOrderSuccessModalOpen,
+      setIsOrderSuccessModalOpen,
+      orderDetails,
+      setOrderDetails,
+    ],
+  );
+
   return (
-    <LandingPageContext.Provider
-      value={{
-        landingPage,
-        cartItems,
-        addToCart,
-        removeFromCart,
-        incrementCartItemQuantity,
-        decrementCartItemQuantity,
-        updateCartItemQuantity,
-        clearCart,
-        productPresentInCart,
-        productsNotPresentInCart,
-        customerDetails,
-        setCustomerDetails,
-        shippingRegion,
-        setShippingRegion,
-        getShippingCharge,
-        isOrderSuccessModalOpen,
-        setIsOrderSuccessModalOpen,
-        orderDetails,
-        setOrderDetails,
-      }}
-    >
+    <LandingPageContext.Provider value={contextValue}>
       {children}
     </LandingPageContext.Provider>
   );

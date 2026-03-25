@@ -19,6 +19,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
 import { Item, ItemContent } from "@/components/ui/item";
+import React from "react";
 
 export default function OrderSummary() {
   const { cartItems, customerDetails, getShippingCharge } = useLandingPage();
@@ -147,7 +148,11 @@ export default function OrderSummary() {
   );
 }
 
-function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
+const OrderSummaryItem = React.memo(function OrderSummaryItem({
+  cartItem,
+}: {
+  cartItem: CartItem;
+}) {
   const { landingPage } = useLandingPage();
   const landingPageProduct = landingPage.landingPageProducts.find(
     (item) => item.product.id === cartItem.product.id,
@@ -174,4 +179,4 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
       </div>
     </div>
   );
-}
+});

@@ -30,6 +30,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ButtonGroup } from "@/components/ui/button-group";
+import React from "react";
 
 export default function ProductsCarousel({
   setApi,
@@ -68,7 +69,7 @@ export default function ProductsCarousel({
   );
 }
 
-function ProductCard({
+const ProductCard = React.memo(function ProductCard({
   landingPageProduct,
 }: {
   landingPageProduct: LandingPageContextType["landingPage"]["landingPageProducts"][number];
@@ -110,6 +111,7 @@ function ProductCard({
                     alt={`${landingPageProduct.product.name} - Image ${index + 1}`}
                     width={60}
                     height={60}
+                    loading="lazy"
                   />
                 </button>
               ))}
@@ -247,4 +249,4 @@ function ProductCard({
       </CardContent>
     </Card>
   );
-}
+});

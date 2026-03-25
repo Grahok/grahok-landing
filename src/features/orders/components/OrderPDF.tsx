@@ -225,7 +225,7 @@ export default function OrderPDF({ order }: Props) {
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View style={styles.logoSection}>
-            <Image src="/logo.png" style={styles.logo} />
+            <Image src="/logo.webp" style={styles.logo} />
             <View>
               <Text style={styles.brandName}>{SITE_NAME}</Text>
               <View style={styles.contactSection}>

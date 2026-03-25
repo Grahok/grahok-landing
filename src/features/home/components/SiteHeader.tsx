@@ -6,7 +6,7 @@ export default function SiteHeader() {
       <div className="container mx-auto p-4 flex min-h-14 justify-center items-center gap-4">
         <Image
           className="rounded-xs"
-          src="/logo.png"
+          src="/logo.webp"
           alt="Logo"
           width={50}
           height={50}

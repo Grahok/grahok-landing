@@ -20,7 +20,7 @@ export const getOrderServer = createServerFn()
     });
 
     if (!order) {
-      return null;
+      throw new Error("ORDER_NOT_FOUND");
     }
 
     const customerDetails = customerDetailsInOrderSchema.parse(order.customer);
