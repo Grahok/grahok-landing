@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { ActionButton } from "@/components/ui/action-button.tsx";
 import { deleteOrderServer } from "../actions/server/deleteOrderServer.ts";
 import { toast } from "sonner";
+import { formatDate } from "../utils";
 
 export default function AllOrdersTable() {
   const { data: orders } = useSuspenseQuery({
@@ -38,9 +39,11 @@ export default function AllOrdersTable() {
         <TableHeader>
           <TableRow>
             <TableHead>Sl</TableHead>
+            <TableHead>Date</TableHead>
             <TableHead>Customer Name</TableHead>
             <TableHead>Total Price</TableHead>
             <TableHead>Shipping Charge</TableHead>
+            <TableHead>Order Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -62,9 +65,11 @@ export default function AllOrdersTable() {
           {orders.map((order, index) => (
             <TableRow key={order.id}>
               <TableCell>{index + 1}</TableCell>
+              <TableCell>{formatDate(order.createdAt)}</TableCell>
               <TableCell>{order.customer.name}</TableCell>
               <TableCell>{order.totalPrice}</TableCell>
               <TableCell>{order.shippingCharge}</TableCell>
+              <TableCell>{order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1)}</TableCell>
               <TableCell>
                 <OrdersTableActions order={order} />
               </TableCell>

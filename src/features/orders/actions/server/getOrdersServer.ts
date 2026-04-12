@@ -4,6 +4,9 @@ import { customerDetailsInOrderSchema } from "../../types/orderTypes";
 
 export const getOrdersServer = createServerFn().handler(async () => {
   const orders = await prisma.order.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       orderItems: {
         include: {
