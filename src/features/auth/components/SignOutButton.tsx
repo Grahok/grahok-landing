@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { signOutServer } from "@/features/auth/actions/server";
 import { toast } from "sonner";
 import SignedIn from "./SignedIn";
 import { useRouter } from "@tanstack/react-router";
+import { ActionButton } from "@/components/ui/action-button";
 
 export default function SignOutButton() {
   const router = useRouter();
@@ -22,9 +22,13 @@ export default function SignOutButton() {
   }
   return (
     <SignedIn>
-      <Button variant="destructive" onClick={handleSignOut}>
+      <ActionButton
+        action={async () => await handleSignOut()}
+        variant="destructive"
+        onClick={handleSignOut}
+      >
         Sign Out
-      </Button>
+      </ActionButton>
     </SignedIn>
   );
 }

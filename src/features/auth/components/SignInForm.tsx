@@ -1,7 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -20,6 +19,7 @@ import { signInSchema } from "@/features/auth/types/authTypes";
 import { PasswordInput } from "@/components/ui/password-input";
 import { signInServer } from "@/features/auth/actions/server";
 import { useRouter } from "@tanstack/react-router";
+import { ActionButton } from "@/components/ui/action-button";
 
 export function SignInForm() {
   const router = useRouter();
@@ -115,9 +115,14 @@ export function SignInForm() {
         </form>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" type="submit" form="sign-in-form">
+        <ActionButton
+          action={async () => await form.handleSubmit()}
+          className="w-full"
+          type="submit"
+          form="sign-in-form"
+        >
           Sign In
-        </Button>
+        </ActionButton>
       </CardFooter>
     </Card>
   );
