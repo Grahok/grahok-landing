@@ -1,15 +1,32 @@
 import { Spinner } from "@/components/ui/spinner";
+import { getOrderServer } from "@/features/orders/actions/server/getOrderServer";
 import EditOrderForm from "@/features/orders/components/EditOrderForm";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 export const Route = createFileRoute("/dashboard/orders/edit/$orderId")({
-  head: () => generateMetadata({ title: "Edit Order" }),
-  component: RouteComponent,
   params: {
     parse: ({ orderId }) => ({ orderId: Number(orderId) }),
   },
+  loader: async ({ params: { orderId }, context: { queryClient } }) => {
+    const order = await queryClient.ensureQueryData({
+      queryKey: ["order", orderId],
+      queryFn: async () =>
+        await getOrderServer({
+          data: orderId,
+        }),
+    });
+    return { order };
+  },
+  errorComponent: ({ error }) => {
+    if (error.message === "ORDER_NOT_FOUND") {
+      throw notFound();
+    }
+  },
+  head: ({ params: { orderId } }) =>
+    generateMetadata({ title: `Edit Order #${orderId}` }),
+  component: RouteComponent,
 });
 
 function RouteComponent() {

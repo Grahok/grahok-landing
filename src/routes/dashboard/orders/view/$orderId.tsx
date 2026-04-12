@@ -4,29 +4,27 @@ import { generateMetadata } from "@/lib/tanstack-meta/generator";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard/orders/view/$orderId")({
-  head: () =>
-    generateMetadata({
-      title: "Order Details",
-    }),
-  component: RouteComponent,
   params: {
     parse: ({ orderId }) => ({ orderId: Number(orderId) }),
   },
-  loader: async ({ params, context: { queryClient } }) => {
+  loader: async ({ params: { orderId }, context: { queryClient } }) => {
     const order = await queryClient.ensureQueryData({
-      queryKey: ["order", params.orderId],
+      queryKey: ["order", orderId],
       queryFn: async () =>
         await getOrderServer({
-          data: params.orderId,
+          data: orderId,
         }),
     });
-    if (!order) {
+    return { order };
+  },
+  errorComponent: ({ error }) => {
+    if (error.message === "ORDER_NOT_FOUND") {
       throw notFound();
     }
-    return {
-      order,
-    };
   },
+  head: ({ params: { orderId } }) =>
+    generateMetadata({ title: `View Order #${orderId}` }),
+  component: RouteComponent,
 });
 
 function RouteComponent() {

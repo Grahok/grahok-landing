@@ -3,12 +3,10 @@ import LandingPageWrapper from "@/features/landing-pages/components/LandingPageW
 import { LandingPageProvider } from "@/features/landing-pages/contexts/LandingPageContext";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import LandingPageNotFound from "./-not-found";
 
 export const Route = createFileRoute("/(public)/landing-page/$landingPageSlug")(
   {
     component: RouteComponent,
-    notFoundComponent: LandingPageNotFound,
     loader: async ({ context: { queryClient }, params }) => {
       const { landingPageSlug } = params;
       const landingPage = await queryClient.ensureQueryData({

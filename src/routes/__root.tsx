@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { generateMetadata } from "@/lib/tanstack-meta/generator";
 import RootProviders from "./-providers";
 import { GTM_ID } from "@/features/gtm/constants";
+import NotFound from "@/features/root/components/errors/NotFound";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -63,6 +64,7 @@ window.dataLayer = window.dataLayer || [];
       },
     ],
   }),
+  notFoundComponent: NotFound,
   shellComponent: RootDocument,
 });
 
