@@ -153,17 +153,17 @@ const ProductCard = React.memo(function ProductCard({
             <Separator />
 
             {/* Price & Quantity Controls */}
-            <div className="flex   items-center justify-between gap-4">
-              <div className="flex flex-col md:flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
-                <h3 className="text-xl md:text-lg font-medium text-nowrap hidden md:block">
+            <div className="flex flex-col md:flex-row  items-center justify-between gap-4">
+              <div className="w-full flex flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold bg-white text-black">
+                <h3 className="text-xl md:text-lg   font-bold text-nowrap">
                   Unit Price
                 </h3>
-                <p className="dark:text-gray-200 text-gray-700  font-bold text-xl">
+                <p className="font-bold text-xl">
                   ৳ {landingPageProduct.product.sellPrice}
                 </p>
               </div>
 
-              <div className="flex gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
+              <div className="hidden md:flex w-full  gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
                 <ButtonGroup aria-label="Quantity controls">
                   <Button
                     size="icon-lg"
@@ -194,18 +194,48 @@ const ProductCard = React.memo(function ProductCard({
                 </ButtonGroup>
               </div>
 
-              <div className="flex flex-col md:flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
-                <h3 className="text-xl md:text-lg font-medium text-nowrap hidden md:block">
+              <div className="w-full flex flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
+                <h3 className="text-xl md:text-lg font-medium text-nowrap">
                   Total Price
                 </h3>
                 <p className="dark:text-gray-200 text-gray-700 font-bold text-xl">
                   ৳ {landingPageProduct.product.sellPrice * quantity}
                 </p>
               </div>
+              <div className="md:hidden flex w-full  gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
+                <ButtonGroup aria-label="Quantity controls">
+                  <Button
+                    size="icon-lg"
+                    onClick={decrementQuantity}
+                    disabled={quantity <= 1 || isProductInCart}
+                    aria-label="Decrease quantity"
+                  >
+                    <IconMinus />
+                  </Button>
+                  <Input
+                    id="quantity-input"
+                    aria-label="Quantity"
+                    className="text-center h-auto w-20"
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.valueAsNumber || 1)}
+                    min={1}
+                    disabled={isProductInCart}
+                  />
+                  <Button
+                    size="icon-lg"
+                    onClick={incrementQuantity}
+                    disabled={isProductInCart}
+                    aria-label="Increase quantity"
+                  >
+                    <IconPlus />
+                  </Button>
+                </ButtonGroup>
+              </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex  gap-3">
+            <div className="flex gap-3">
               <Button
                 size="lg"
                 className="flex-1 min-h-3"
