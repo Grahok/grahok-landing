@@ -24,12 +24,19 @@ import React from "react";
 export default function OrderSummary() {
   const { cartItems, customerDetails, getShippingCharge } = useLandingPage();
   const { offer, isThresholdMet } = useLandingPageOffer();
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.product.sellPrice,
-    0,
+  const subtotal = React.useMemo(
+    () =>
+      cartItems.reduce(
+        (acc, item) => acc + item.quantity * item.product.sellPrice,
+        0,
+      ),
+    [cartItems],
   );
   const shippingCharge = getShippingCharge();
-  const isFreeShipping = isThresholdMet(subtotal);
+  const isFreeShipping = React.useMemo(
+    () => isThresholdMet(subtotal),
+    [isThresholdMet, subtotal],
+  );
   const finalShippingCharge = isFreeShipping ? 0 : shippingCharge;
   const total = subtotal + finalShippingCharge;
 
@@ -100,22 +107,27 @@ export default function OrderSummary() {
 
           <Separator />
 
-          <div className="space-y-3">
+          <div className="space-y-3" role="region" aria-label="Order breakdown">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Subtotal</span>
-              <span className="font-medium">৳{subtotal}</span>
+              <span className="font-medium" aria-label={`Subtotal: ${subtotal} Bangladeshi Taka`}>
+                <span aria-hidden="true">৳{subtotal}</span>
+              </span>
             </div>
             {offer && offer.type === "FREE_SHIPPING" && offer.threshold && (
               <div className="flex justify-between text-sm items-center">
                 <span className="text-muted-foreground">Shipping</span>
                 <div className="flex items-center gap-2">
                   {isFreeShipping ? (
-                    <Badge variant="secondary" className="gap-1">
-                      <IconTruck className="h-3 w-3" />
-                      Free
+                    <Badge variant="secondary" className="gap-1" aria-label="Free shipping applied">
+                      <IconTruck className="h-3 w-3" aria-hidden="true" />
+                      <span aria-hidden="true">Free</span>
+                      <span className="sr-only">Free shipping</span>
                     </Badge>
                   ) : (
-                    <span className="font-medium">৳{shippingCharge}</span>
+                    <span className="font-medium" aria-label={`Shipping charge: ${shippingCharge} Bangladeshi Taka`}>
+                      <span aria-hidden="true">৳{shippingCharge}</span>
+                    </span>
                   )}
                 </div>
               </div>
@@ -124,22 +136,29 @@ export default function OrderSummary() {
               offer &&
               offer.type === "FREE_SHIPPING" &&
               offer.threshold && (
-                <Item variant="muted" className="bg-green-700">
+                <Item variant="muted" className="bg-green-700" role="status" aria-live="polite">
                   <ItemContent className="font-semibold">
-                    Add ৳{offer.threshold - subtotal} more for free shipping!
+                    <span aria-hidden="true">Add ৳{offer.threshold - subtotal} more for free shipping!</span>
+                    <span className="sr-only">
+                      Add {offer.threshold - subtotal} Bangladeshi Taka more to qualify for free shipping
+                    </span>
                   </ItemContent>
                 </Item>
               )}
             {(!offer || offer.type !== "FREE_SHIPPING") && (
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
-                <span className="font-medium">৳{shippingCharge}</span>
+                <span className="font-medium" aria-label={`Shipping charge: ${shippingCharge} Bangladeshi Taka`}>
+                  <span aria-hidden="true">৳{shippingCharge}</span>
+                </span>
               </div>
             )}
             <Separator />
             <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
-              <span className="text-primary">৳{total}</span>
+              <span className="text-primary" aria-label={`Total amount: ${total} Bangladeshi Taka`}>
+                <span aria-hidden="true">৳{total}</span>
+              </span>
             </div>
           </div>
         </CardContent>
@@ -175,7 +194,7 @@ const OrderSummaryItem = React.memo(function OrderSummaryItem({
         </div>
       </div>
       <div className="text-right">
-        <h4 className="font-semibold">৳{itemTotal}</h4>
+        <span className="font-semibold text-lg">৳{itemTotal}</span>
       </div>
     </div>
   );

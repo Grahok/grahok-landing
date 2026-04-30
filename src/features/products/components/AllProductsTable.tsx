@@ -68,6 +68,7 @@ export default function AllProductsTable() {
                     width={50}
                     height={50}
                     alt=""
+                    loading="lazy"
                   />
                 </div>
               </TableCell>
@@ -103,7 +104,7 @@ function ProductsTableActions({ product }: { product: ProductModel }) {
   }
   return (
     <div className="flex items-center gap-2">
-      <Button size="icon" asChild>
+      <Button size="icon" asChild aria-label={`Edit ${product.name}`}>
         <Link
           to={`/dashboard/products/edit/$productId`}
           params={{ productId: product.id }}
@@ -115,6 +116,7 @@ function ProductsTableActions({ product }: { product: ProductModel }) {
         action={async () => await handleDeleteProduct(product.id)}
         requireAreYouSure
         variant="destructive"
+        aria-label={`Delete ${product.name}`}
       >
         <IconTrash />
       </ActionButton>

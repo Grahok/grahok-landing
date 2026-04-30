@@ -47,7 +47,7 @@ export default function AllLandingPagesTable() {
         <TableBody>
           {landingPages.length === 0 && (
             <TableRow>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={3}>
                 <Empty>
                   <EmptyHeader>
                     <EmptyMedia>
@@ -98,16 +98,17 @@ function LandingPagesTableActions({
   }
   return (
     <div className="flex items-center gap-2">
-      <Button size="icon" asChild>
+      <Button size="icon" asChild aria-label="View landing page">
         <Link
           to={`/landing-page/$landingPageSlug`}
           params={{ landingPageSlug: landingPage.slug }}
           target="_blank"
+          rel="noopener noreferrer"
         >
           <IconEye />
         </Link>
       </Button>
-      <Button size="icon" asChild>
+      <Button size="icon" asChild aria-label="Edit landing page">
         <Link
           to={`/dashboard/landing-pages/edit/$landingPageSlug`}
           params={{ landingPageSlug: landingPage.slug }}
@@ -116,7 +117,7 @@ function LandingPagesTableActions({
         </Link>
       </Button>
       <LandingPageDuplicationDialog landingPageSlug={landingPage.slug}>
-        <Button size="icon">
+        <Button size="icon" aria-label="Duplicate landing page">
           <IconCopy />
         </Button>
       </LandingPageDuplicationDialog>

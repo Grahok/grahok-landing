@@ -28,6 +28,7 @@ import { ActionButton } from "@/components/ui/action-button";
 import { sendOrderSuccessMessageAdminServer } from "../actions/server/sendOrderSuccessMessageAdminServer";
 import { TShippingRegion } from "@/features/orders/types/orderTypes";
 import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
+import React from "react";
 
 export default function CustomerInformation() {
   const {
@@ -44,22 +45,32 @@ export default function CustomerInformation() {
 
   const { offer, isThresholdMet } = useLandingPageOffer();
 
-  const isFormValid =
-    customerDetails.name &&
-    customerDetails.mobileNumber &&
-    customerDetails.address &&
-    shippingRegion;
+  const isFormValid = React.useMemo(
+    () =>
+      customerDetails.name &&
+      customerDetails.mobileNumber &&
+      customerDetails.address &&
+      shippingRegion,
+    [customerDetails.name, customerDetails.mobileNumber, customerDetails.address, shippingRegion],
+  );
   const isCartEmpty = cartItems.length === 0;
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.product.sellPrice,
-    0,
+  const subtotal = React.useMemo(
+    () =>
+      cartItems.reduce(
+        (acc, item) => acc + item.quantity * item.product.sellPrice,
+        0,
+      ),
+    [cartItems],
   );
   const rawShippingCharge = getShippingCharge();
-  const isFreeShipping =
-    offer &&
-    offer.type === "FREE_SHIPPING" &&
-    offer.threshold &&
-    isThresholdMet(subtotal);
+  const isFreeShipping = React.useMemo(
+    () =>
+      offer &&
+      offer.type === "FREE_SHIPPING" &&
+      offer.threshold &&
+      isThresholdMet(subtotal),
+    [offer, subtotal, isThresholdMet],
+  );
   const shippingCharge = isFreeShipping ? 0 : rawShippingCharge;
   const totalPrice = subtotal;
   const finalTotal = subtotal + shippingCharge;
@@ -101,19 +112,22 @@ export default function CustomerInformation() {
 
         toast.success("Order placed successfully");
         setIsOrderSuccessModalOpen(true);
-        window.dataLayer.push({
-          event: "purchase",
-          transaction_id: order.id,
-          value: order.totalPrice,
-          shipping: order.shippingCharge,
-          currency: "BDT",
-          contents: order.orderItems.map((orderItem) => ({
-            item_id: orderItem.product.id,
-            item_name: orderItem.product.name,
-            price: orderItem.product.sellPrice,
-            quantity: orderItem.quantity,
-          })),
-        });
+        if (typeof window !== "undefined") {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "purchase",
+            transaction_id: order.id,
+            value: order.totalPrice,
+            shipping: order.shippingCharge,
+            currency: "BDT",
+            contents: order.orderItems.map((orderItem) => ({
+              item_id: orderItem.product.id,
+              item_name: orderItem.product.name,
+              price: orderItem.product.sellPrice,
+              quantity: orderItem.quantity,
+            })),
+          });
+        }
         try {
           const { success } = await sendOrderSuccessMessageServer({
             data: {
@@ -185,6 +199,7 @@ export default function CustomerInformation() {
             <Label htmlFor="customer-name" className="flex items-center gap-2">
               <IconUser className="h-4 w-4" />
               Full Name
+              <span className="text-red-500 ml-1" aria-hidden="true">*</span>
             </Label>
             <Input
               id="customer-name"
@@ -193,6 +208,7 @@ export default function CustomerInformation() {
               onChange={(e) =>
                 setCustomerDetails({ ...customerDetails, name: e.target.value })
               }
+              aria-required="true"
             />
           </Field>
 
@@ -203,6 +219,7 @@ export default function CustomerInformation() {
             >
               <IconPhone className="h-4 w-4" />
               Mobile Number
+              <span className="text-red-500 ml-1" aria-hidden="true">*</span>
             </Label>
             <Input
               id="customer-mobile-number"
@@ -214,6 +231,7 @@ export default function CustomerInformation() {
                   mobileNumber: e.target.value,
                 })
               }
+              aria-required="true"
             />
           </Field>
 
@@ -224,6 +242,7 @@ export default function CustomerInformation() {
             >
               <IconMapPin className="h-4 w-4" />
               Delivery Address
+              <span className="text-red-500 ml-1" aria-hidden="true">*</span>
             </Label>
             <Textarea
               id="customer-address"
@@ -236,6 +255,7 @@ export default function CustomerInformation() {
                   address: e.target.value,
                 })
               }
+              aria-required="true"
             />
           </Field>
         </FieldGroup>
@@ -244,6 +264,7 @@ export default function CustomerInformation() {
             <Label className="flex items-center gap-2">
               <IconMapPin className="h-4 w-4" />
               Shipping Location (Home Delivery)
+              <span className="text-red-500 ml-1" aria-hidden="true">*</span>
             </Label>
             <RadioGroup
               value={shippingRegion}
@@ -251,6 +272,8 @@ export default function CustomerInformation() {
                 setShippingRegion(value as TShippingRegion)
               }
               className="grid grid-cols-2"
+              aria-required="true"
+              aria-label="Shipping location"
             >
               <FieldLabel htmlFor="inside-dhaka">
                 <Field orientation="horizontal">
@@ -280,14 +303,14 @@ export default function CustomerInformation() {
         <Separator />
 
         <div className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2" aria-live="polite" aria-atomic="true">
             {isFormValid ? (
               <div className="flex items-center gap-2 text-sm text-green-600">
                 <IconCircleCheck className="h-4 w-4" />
                 <span>All fields completed</span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-sm text-orange-600">
+              <div className="flex items-center gap-2 text-sm text-orange-600" role="alert">
                 <IconAlertCircle className="h-4 w-4" />
                 <span>
                   Please complete all required fields including shipping region
@@ -301,9 +324,17 @@ export default function CustomerInformation() {
             size="lg"
             action={handleCheckOut}
             disabled={!isFormValid || isCartEmpty}
+            aria-label={!isFormValid || isCartEmpty ?
+              "Complete all required fields to place order" :
+              `Place order for ${finalTotal} Bangladeshi Taka`}
           >
-            <IconShoppingBag className="h-4 w-4 mr-2" />
-            Place Order • ৳{finalTotal}
+            <IconShoppingBag className="h-4 w-4 mr-2" aria-hidden="true" />
+            <span aria-hidden="true">Place Order • ৳{finalTotal}</span>
+            <span className="sr-only">
+              {!isFormValid || isCartEmpty ?
+                "Complete all required fields to place order" :
+                `Place order for ${finalTotal} Bangladeshi Taka`}
+            </span>
           </ActionButton>
         </div>
       </CardContent>

@@ -15,12 +15,14 @@ export default function RelatedProducts({ api }: { api: CarouselApi }) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <IconBox className="h-5 w-5" />
-          Related Products
+          <h2 className="flex items-center gap-2">
+            <IconBox className="h-5 w-5" />
+            Related Products
+          </h2>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <ItemGroup className="grid grid-cols-2 2xl:grid-cols-3 gap-4">
+        <ItemGroup className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {productsNotPresentInCart.map((item) => (
             <RelatedProductItem key={item.product.id} api={api} item={item} />
           ))}
@@ -51,23 +53,26 @@ function RelatedProductItem({
     <Item variant="outline" onClick={handleCarouselScroll} asChild>
       <a href="#">
         <Image
-          className="rounded"
+          className="rounded object-cover"
           src={item.product.images[0]}
           alt={item.product.name}
-          layout="fullWidth"
+          loading="lazy"
+          background="auto"
+          width={400}
+          height={400}
         />
         <ItemContent className="space-y-4">
           <div className="space-y-1">
-            <ItemTitle className="text-base">{item.product.name}</ItemTitle>
-            <strong className="text-muted-foreground text-xl">
+            <ItemTitle className="md:text-xl text-xs">{item.product.name}</ItemTitle>
+            <strong className="text-muted-foreground text-xl ">
               ৳{item.product.sellPrice}
             </strong>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
             <Button variant="outline">View</Button>
-            <Button onClick={() => addToCart(item.product, 1)} asChild>
-              <a href="#order-section">Add to Cart</a>
+            <Button onClick={() => addToCart(item.product, 1)}>
+              Add to Cart
             </Button>
           </div>
         </ItemContent>

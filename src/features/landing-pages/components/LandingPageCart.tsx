@@ -83,25 +83,37 @@ const CartItem = React.memo(function CartItem({
   return (
     <div className="flex gap-4 p-4 border rounded-lg">
       <div className="shrink-0">
-        <Image
-          className="rounded-lg object-cover"
-          src={landingPageProduct.product.images[0]}
-          alt={landingPageProduct.product.name}
-          width={100}
-          height={100}
-        />
+        {landingPageProduct.product.images?.[0] ? (
+          <Image
+            className="rounded-lg object-cover"
+            src={landingPageProduct.product.images[0]}
+            alt={landingPageProduct.product.name}
+            width={100}
+            height={100}
+            loading="lazy"
+          />
+        ) : (
+          <div
+            className="rounded-lg bg-muted flex items-center justify-center"
+            style={{ width: 100, height: 100 }}
+            aria-label={landingPageProduct.product.name}
+          >
+            <IconPackage className="h-8 w-8 text-muted-foreground" />
+          </div>
+        )}
       </div>
 
       <div className="flex-1 flex-col gap-4">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-semibold">
+          <h4 className="text-lg font-semibold">
             {landingPageProduct.product.name}
-          </h3>
+          </h4>
           <Button
             size="sm"
             variant="ghost"
             className="text-destructive hover:text-destructive hover:bg-destructive/10"
             onClick={() => removeFromCart(cartItem.product.id)}
+            aria-label={`Remove ${landingPageProduct.product.name} from cart`}
           >
             <IconTrash className="h-4 w-4" />
           </Button>
@@ -116,9 +128,9 @@ const CartItem = React.memo(function CartItem({
               <span>৳{landingPageProduct.product.sellPrice}</span>
             </div>
 
-            <h4 className="font-semiboldb text-muted-foreground">
+            <p className="font-semibold text-muted-foreground">
               ৳{landingPageProduct.product.sellPrice * cartItem.quantity}
-            </h4>
+            </p>
           </div>
 
           <div className="flex items-center border rounded-lg">
@@ -128,6 +140,7 @@ const CartItem = React.memo(function CartItem({
               onClick={() => decrementCartItemQuantity(cartItem.product.id)}
               disabled={cartItem.quantity <= 1}
               className="h-8 w-8 rounded-r-none"
+              aria-label="Decrease quantity"
             >
               <IconMinus className="h-3 w-3" />
             </Button>
@@ -136,18 +149,22 @@ const CartItem = React.memo(function CartItem({
               type="number"
               value={cartItem.quantity}
               min={1}
-              onChange={(e) =>
+              onChange={(e) => {
+                const raw = e.target.valueAsNumber;
+                const sanitized = Number.isFinite(raw) ? raw : 1;
                 updateCartItemQuantity(
                   cartItem.product.id,
-                  Math.max(1, e.target.valueAsNumber),
-                )
-              }
+                  Math.max(1, sanitized),
+                );
+              }}
+              aria-label="Quantity"
             />
             <Button
               variant="ghost"
               size="sm"
               onClick={() => incrementCartItemQuantity(cartItem.product.id)}
               className="h-8 w-8 rounded-l-none"
+              aria-label="Increase quantity"
             >
               <IconPlus className="h-3 w-3" />
             </Button>

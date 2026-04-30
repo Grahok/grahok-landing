@@ -130,7 +130,7 @@ function OffersTableActions({ offer }: { offer: OfferWithLandingPages }) {
   }
   return (
     <div className="flex items-center gap-2">
-      <Button size="icon" asChild>
+      <Button size="icon" asChild aria-label={`Edit offer ${offer.id}`}>
         <Link
           to="/dashboard/offers/edit/$offerId"
           params={{ offerId: offer.id }}
@@ -142,6 +142,7 @@ function OffersTableActions({ offer }: { offer: OfferWithLandingPages }) {
         action={async () => await handleDeleteOffer(offer.id)}
         requireAreYouSure
         variant="destructive"
+        aria-label={`Delete offer ${offer.id}`}
       >
         <IconTrash />
       </ActionButton>

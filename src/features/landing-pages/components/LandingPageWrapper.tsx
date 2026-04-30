@@ -1,15 +1,80 @@
-import CustomerInformation from "./CustomerInformation";
-import LandingPageCart from "./LandingPageCart";
-import OrderSummary from "./OrderSummary";
-import OrderSuccessModal from "./OrderSuccessModal";
-import ProductsCarousel from "./ProductsCarousel";
-import RelatedProducts from "./RelatedProducts";
 import { CarouselApi } from "@/components/ui/carousel";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import Footer from "./Footer";
 import { useLandingPage } from "../contexts/LandingPageContext";
 import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
 import { Marquee } from "@/components/ui/saw/marquee";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Lazy load components that are not needed immediately
+const ProductsCarousel = lazy(() => import("./ProductsCarousel"));
+const CustomerInformation = lazy(() => import("./CustomerInformation"));
+const LandingPageCart = lazy(() => import("./LandingPageCart"));
+const OrderSummary = lazy(() => import("./OrderSummary"));
+const RelatedProducts = lazy(() => import("./RelatedProducts"));
+const OrderSuccessModal = lazy(() => import("./OrderSuccessModal"));
+
+// Skeleton loaders for each component
+function ProductsCarouselSkeleton() {
+  return (
+    <div className="container mx-auto scroll-mt-26 space-y-4">
+      <Skeleton className="h-8 w-64" />
+      <div className="flex gap-4">
+        <Skeleton className="h-64 w-full" />
+        <Skeleton className="h-64 w-full" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    </div>
+  );
+}
+
+function CustomerInformationSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-8 w-48" />
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-10 w-3/4" />
+    </div>
+  );
+}
+
+function LandingPageCartSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-8 w-48" />
+      <Skeleton className="h-32 w-full" />
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-10 w-full" />
+    </div>
+  );
+}
+
+function OrderSummarySkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-8 w-48" />
+      <Skeleton className="h-24 w-full" />
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-10 w-full" />
+    </div>
+  );
+}
+
+function RelatedProductsSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-8 w-48" />
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <Skeleton className="h-40 w-full" />
+        <Skeleton className="h-40 w-full" />
+        <Skeleton className="h-40 w-full" />
+      </div>
+    </div>
+  );
+}
 
 export default function LandingPageWrapper() {
   const [api, setApi] = useState<CarouselApi>();
@@ -25,21 +90,35 @@ export default function LandingPageWrapper() {
           </Marquee>
         </div>
       )}
-      <section className="p-4 space-y-12">
-        <ProductsCarousel setApi={setApi} />
-        <section className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section className="py-4 md:p-4 space-y-12">
+        <Suspense fallback={<ProductsCarouselSkeleton />}>
+          <ProductsCarousel setApi={setApi} />
+        </Suspense>
+        <section className="container mx-auto grid grid-cols-1">
           <div className="space-y-12">
             {productsNotPresentInCart.length > 0 && (
-              <RelatedProducts api={api} />
+              <Suspense fallback={<RelatedProductsSkeleton />}>
+                <RelatedProducts api={api} />
+              </Suspense>
             )}
-            <LandingPageCart />
-            <CustomerInformation />
+            <div className="space-y-12 grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <Suspense fallback={<LandingPageCartSkeleton />}>
+                <LandingPageCart />
+              </Suspense>
+              <Suspense fallback={<CustomerInformationSkeleton />}>
+                <CustomerInformation />
+              </Suspense>
+              <Suspense fallback={<OrderSummarySkeleton />}>
+                <OrderSummary />
+              </Suspense>
+            </div>
           </div>
-          <OrderSummary />
         </section>
       </section>
       <Footer />
-      <OrderSuccessModal />
+      <Suspense fallback={null}>
+        <OrderSuccessModal />
+      </Suspense>
     </>
   );
 }

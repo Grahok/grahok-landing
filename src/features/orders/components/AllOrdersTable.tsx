@@ -50,7 +50,7 @@ export default function AllOrdersTable() {
         <TableBody>
           {orders.length === 0 && (
             <TableRow>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={7}>
                 <Empty>
                   <EmptyHeader>
                     <EmptyMedia>
@@ -99,7 +99,7 @@ function OrdersTableActions({ order }: { order: OrderModel }) {
   }
   return (
     <div className="flex items-center gap-2">
-      <Button size="icon" asChild>
+      <Button size="icon" asChild aria-label={`View order ${order.id}`}>
         <Link
           to={`/dashboard/orders/view/$orderId`}
           params={{ orderId: order.id }}
@@ -107,7 +107,7 @@ function OrdersTableActions({ order }: { order: OrderModel }) {
           <IconEye />
         </Link>
       </Button>
-      <Button size="icon" asChild>
+      <Button size="icon" asChild aria-label={`Edit order ${order.id}`}>
         <Link
           to={`/dashboard/orders/edit/$orderId`}
           params={{ orderId: order.id }}
@@ -119,6 +119,7 @@ function OrdersTableActions({ order }: { order: OrderModel }) {
         action={async () => await handleDeleteOrder(order.id)}
         requireAreYouSure
         variant="destructive"
+        aria-label={`Delete order ${order.id}`}
       >
         <IconTrash />
       </ActionButton>

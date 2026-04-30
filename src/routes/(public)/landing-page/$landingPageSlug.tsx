@@ -23,18 +23,37 @@ export const Route = createFileRoute("/(public)/landing-page/$landingPageSlug")(
       }
       return { landingPage };
     },
-    head: ({ loaderData }) =>
-      generateMetadata({
-        title: loaderData?.landingPage.name,
-        openGraph: {
-          images:
-            loaderData?.landingPage.landingPageProducts[0].product.images[0],
-        },
-        twitter: {
-          card: "summary_large_image",
-          images: loaderData?.landingPage.landingPageProducts[0].product.images,
-        },
-      }),
+    head: ({ loaderData }) => {
+      const firstProduct = loaderData?.landingPage.landingPageProducts[0];
+      const firstImage = firstProduct?.product.images?.[0];
+      
+      return {
+        ...generateMetadata({
+          title: loaderData?.landingPage.name,
+          description: firstProduct?.description ||
+            `Buy ${loaderData?.landingPage.name} online with best price and fast delivery in Bangladesh.`,
+          openGraph: {
+            images: firstImage,
+            description: firstProduct?.description ||
+              `Buy ${loaderData?.landingPage.name} online with best price and fast delivery in Bangladesh.`,
+          },
+          twitter: {
+            card: "summary_large_image",
+            images: firstProduct?.product.images,
+            description: firstProduct?.description ||
+              `Buy ${loaderData?.landingPage.name} online with best price and fast delivery in Bangladesh.`,
+          },
+        }),
+        links: firstImage ? [
+          {
+            rel: "preload",
+            href: firstImage,
+            as: "image",
+            fetchPriority: "high",
+          },
+        ] : [],
+      };
+    },
   },
 );
 

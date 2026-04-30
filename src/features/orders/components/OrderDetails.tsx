@@ -33,6 +33,35 @@ const statusConfig: Record<
   },
 };
 
+const statusClassConfig: Record<
+  string,
+  {
+    badgeClass: string;
+    dotClass: string;
+  }
+> = {
+  pending: {
+    badgeClass: "bg-yellow-500/10 border border-yellow-500/20",
+    dotClass: "bg-yellow-500",
+  },
+  confirmed: {
+    badgeClass: "bg-blue-500/10 border border-blue-500/20",
+    dotClass: "bg-blue-500",
+  },
+  shipped: {
+    badgeClass: "bg-purple-500/10 border border-purple-500/20",
+    dotClass: "bg-purple-500",
+  },
+  delivered: {
+    badgeClass: "bg-green-500/10 border border-green-500/20",
+    dotClass: "bg-green-500",
+  },
+  cancelled: {
+    badgeClass: "bg-red-500/10 border border-red-500/20",
+    dotClass: "bg-red-500",
+  },
+};
+
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat("en-BD", {
     style: "currency",
@@ -99,6 +128,11 @@ export default function OrderDetails({
     color: "bg-gray-500",
   };
 
+  const statusClass = statusClassConfig[order.orderStatus] || {
+    badgeClass: "bg-gray-500/10 border border-gray-500/20",
+    dotClass: "bg-gray-500",
+  };
+
   return (
     <section className="max-w-4xl mx-auto space-y-8">
       <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary/10 via-primary/5 to-transparent p-6 sm:p-8">
@@ -122,10 +156,10 @@ export default function OrderDetails({
             </div>
             <div className="flex items-center gap-2">
               <div
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${status.color}/10 border border-${status.color.replace("bg-", "")}/20`}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${statusClass.badgeClass}`}
               >
                 <span
-                  className={`w-2 h-2 rounded-full ${status.color} animate-pulse`}
+                  className={`w-2 h-2 rounded-full ${statusClass.dotClass} animate-pulse`}
                 />
                 <span className="font-medium text-sm">{status.label}</span>
               </div>
@@ -212,17 +246,24 @@ export default function OrderDetails({
               <div className="divide-y">
                 {order.orderItems.map((orderItem) => (
                   <div
-                    key={orderItem.name}
+                    key={orderItem.id}
                     className="flex items-center gap-4 p-4 hover:bg-muted/30 transition-colors"
                   >
                     <div className="relative shrink-0">
-                      <Image
-                        className="rounded-lg object-cover"
-                        src={orderItem.product.images[0]}
-                        alt={orderItem.product.name}
-                        width={72}
-                        height={72}
-                      />
+                      {orderItem.product.images?.[0] ? (
+                        <Image
+                          className="rounded-lg object-cover"
+                          src={orderItem.product.images[0]}
+                          alt={orderItem.product.name}
+                          width={72}
+                          height={72}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-[72px] h-[72px] rounded-lg bg-muted flex items-center justify-center">
+                          <IconShoppingCart className="h-8 w-8 text-muted-foreground" />
+                        </div>
+                      )}
                       <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">
                         {orderItem.quantity}
                       </div>
