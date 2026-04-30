@@ -153,9 +153,9 @@ const ProductCard = React.memo(function ProductCard({
             <Separator />
 
             {/* Price & Quantity Controls */}
-            <div className="flex flex-col md:flex-row  items-center justify-between gap-4">
-              <div className="w-full flex flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
-                <h3 className="text-xl md:text-lg font-medium text-nowrap">
+            <div className="flex   items-center justify-between gap-4">
+              <div className="flex flex-col md:flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
+                <h3 className="text-xl md:text-lg font-medium text-nowrap hidden md:block">
                   Unit Price
                 </h3>
                 <p className="dark:text-gray-200 text-gray-700  font-bold text-xl">
@@ -163,7 +163,7 @@ const ProductCard = React.memo(function ProductCard({
                 </p>
               </div>
 
-              <div className="w-full flex gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
+              <div className="flex gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
                 <ButtonGroup aria-label="Quantity controls">
                   <Button
                     size="icon-lg"
@@ -194,8 +194,8 @@ const ProductCard = React.memo(function ProductCard({
                 </ButtonGroup>
               </div>
 
-              <div className="w-full flex flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
-                <h3 className="text-xl md:text-lg font-medium text-nowrap">
+              <div className="flex flex-col md:flex-row gap-2 justify-center items-center border rounded-md px-4 py-1 font-bold">
+                <h3 className="text-xl md:text-lg font-medium text-nowrap hidden md:block">
                   Total Price
                 </h3>
                 <p className="dark:text-gray-200 text-gray-700 font-bold text-xl">
