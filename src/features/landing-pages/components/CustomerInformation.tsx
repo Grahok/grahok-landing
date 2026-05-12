@@ -153,6 +153,7 @@ export default function CustomerInformation() {
               orderId: order.id,
               mobileNumber: customerDetails.mobileNumber,
               customerName: customerDetails.name,
+              totalPrice: order.totalPrice,
             },
           });
 

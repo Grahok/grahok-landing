@@ -116,10 +116,11 @@ const ProductCard = React.memo(function ProductCard({
                 <button
                   key={index}
                   onClick={() => setActiveImageIndex(index)}
-                  className={`shrink-0 rounded-md border-2 transition-all ${index === activeImageIndex
-                    ? "border-primary ring-2 ring-primary/20"
-                    : "border-muted hover:border-primary/50"
-                    }`}
+                  className={`shrink-0 rounded-md border-2 transition-all ${
+                    index === activeImageIndex
+                      ? "border-primary ring-2 ring-primary/20"
+                      : "border-muted hover:border-primary/50"
+                  }`}
                   aria-label={`View ${landingPageProduct.product.name} image ${index + 1}`}
                   aria-pressed={index === activeImageIndex}
                 >
@@ -262,7 +263,7 @@ const ProductCard = React.memo(function ProductCard({
                 }
                 asChild
               >
-                <a href="#order-section" >
+                <a href="#order-section">
                   <IconShoppingCart className="h-4 w-4 mr-2" />
                   {productPresentInCart(landingPageProduct.product.id)
                     ? "Added to Cart"
@@ -275,22 +276,25 @@ const ProductCard = React.memo(function ProductCard({
 
             {/* Product Specification */}
             <div className=" flex flex-col md:flex-row gap-5 ">
-
-
               <div className="bg-gray-600  rounded-md px-4 py-2 font-medium md:w-1/2 w-full text-center text-white hover:text-gray-900 hover:bg-gray-300 transition-colors duration-200">
-
-                <a href="tel:+8801973040204" className="flex items-center justify-center gap-5"><PhoneCall className="w-5 h-5" /> Call for Order</a>
+                <a
+                  href={`tel:${import.meta.env.VITE_CONTACT_MOBILE_NUMBER}`}
+                  className="flex items-center justify-center gap-5"
+                >
+                  <PhoneCall className="w-5 h-5" /> Call for Order
+                </a>
               </div>
               <div className="bg-green-600  rounded-md px-4 py-2 font-medium md:w-1/2 w-full text-center text-white hover:text-gray-900 hover:bg-green-300 transition-colors duration-200">
-
-
-                <a href={`https://wa.me/+8801973040204?text=I%20want%20to%20order%20this%20product%20${currentUrl}`} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-5 ">
+                <a
+                  href={`https://wa.me/${import.meta.env.VITE_CONTACT_WHATSAPP_NUMBER}?text=I%20want%20to%20order%20this%20product%20${currentUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-5 "
+                >
                   <IconBrandWhatsappFilled className="w-5 h-5" />
                   WhatsApp Now
                 </a>
               </div>
-
             </div>
             <Separator />
             {/* FAQs Section */}
