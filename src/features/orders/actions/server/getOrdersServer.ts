@@ -1,7 +1,6 @@
 import { prisma } from "@/db";
 import { createServerFn } from "@tanstack/react-start";
 import { customerDetailsInOrderSchema } from "../../types/orderTypes";
-import z from "zod";
 
 export const getOrdersServer = createServerFn().handler(async () => {
   const orders = await prisma.order.findMany({
@@ -18,9 +17,7 @@ export const getOrdersServer = createServerFn().handler(async () => {
   });
 
   const ordersWithCustomerDetails = orders.map((order) => {
-    const customerDetails = customerDetailsInOrderSchema.extend({
-      mobileNumber: z.string(),
-    }).parse(order.customer);
+    const customerDetails = customerDetailsInOrderSchema.parse(order.customer);
     return { ...order, customer: customerDetails };
   });
 

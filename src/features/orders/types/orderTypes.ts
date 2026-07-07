@@ -3,7 +3,7 @@ import { z } from "zod";
 // 2. Customer Schema
 export const customerDetailsInOrderSchema = z.object({
   name: z.string().min(1, "Customer Name is required"),
-  mobileNumber: z.string().regex(/^01[3-9]\d{8}$/, "Mobile number must be valid, and in this format: 01*********"), // Adjusted for typical length
+  mobileNumber: z.string().min(1, "Mobile number must be valid"),
   address: z.string().min(1, "Address is required"),
 });
 
