@@ -2,11 +2,6 @@
   "name": "grahok-landing",
   "private": true,
   "type": "module",
-  "pnpm": {
-    "overrides": {
-      "base64-js": "0.0.8"
-    }
-  },
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "dotenv -e .env.local -- prisma migrate deploy && vite build",
@@ -96,5 +91,8 @@
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
     "web-vitals": "^5.1.0"
+  },
+  "overrides": {
+    "base64-js": "0.0.8"
   }
 }
