@@ -35,12 +35,13 @@ export default function AllOrdersTable() {
   });
   return (
     <div className="border rounded-md">
-      <Table className="table-fixed">
+      <Table className="table-auto">
         <TableHeader>
           <TableRow>
             <TableHead>Sl</TableHead>
             <TableHead>Date</TableHead>
             <TableHead>Customer Name</TableHead>
+            <TableHead>Customer Mobile Number</TableHead>
             <TableHead>Total Price</TableHead>
             <TableHead>Shipping Charge</TableHead>
             <TableHead>Order Status</TableHead>
@@ -50,7 +51,7 @@ export default function AllOrdersTable() {
         <TableBody>
           {orders.length === 0 && (
             <TableRow>
-              <TableCell colSpan={7}>
+              <TableCell colSpan={8}>
                 <Empty>
                   <EmptyHeader>
                     <EmptyMedia>
@@ -67,6 +68,7 @@ export default function AllOrdersTable() {
               <TableCell>{index + 1}</TableCell>
               <TableCell>{formatDate(order.createdAt)}</TableCell>
               <TableCell>{order.customer.name}</TableCell>
+              <TableCell>{order.customer.mobileNumber}</TableCell>
               <TableCell>{order.totalPrice}</TableCell>
               <TableCell>{order.shippingCharge}</TableCell>
               <TableCell>{order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1)}</TableCell>
