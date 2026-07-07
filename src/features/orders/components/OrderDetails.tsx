@@ -9,7 +9,7 @@ import {
   IconTruck,
   IconUser,
 } from "@tabler/icons-react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+// import { PDFDownloadLink } from "@react-pdf/renderer";
 import OrderPDF from "./OrderPDF";
 import { Image } from "@unpic/react";
 import { toast } from "sonner";
@@ -163,7 +163,7 @@ export default function OrderDetails({
                 />
                 <span className="font-medium text-sm">{status.label}</span>
               </div>
-              <PDFDownloadLink
+              {/* <PDFDownloadLink
                 document={<OrderPDF order={order} />}
                 fileName={`order-${order.id}.pdf`}
               >
@@ -181,7 +181,7 @@ export default function OrderDetails({
                     {loading ? "Loading document..." : "Save as PDF"}
                   </Button>
                 )}
-              </PDFDownloadLink>
+              </PDFDownloadLink> */}
             </div>
           </div>
 
