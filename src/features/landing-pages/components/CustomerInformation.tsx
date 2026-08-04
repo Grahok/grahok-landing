@@ -28,6 +28,11 @@ import { ActionButton } from "@/components/ui/action-button";
 import { sendOrderSuccessMessageAdminServer } from "../actions/server/sendOrderSuccessMessageAdminServer";
 import { TShippingRegion } from "@/features/orders/types/orderTypes";
 import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
+import {
+  MIN_ORDER_TOTAL,
+  MIN_ORDER_TOTAL_MESSAGE,
+  getMinOrderRemainingMessage,
+} from "@/features/orders/constants";
 import React from "react";
 
 export default function CustomerInformation() {
@@ -74,6 +79,7 @@ export default function CustomerInformation() {
   const shippingCharge = isFreeShipping ? 0 : rawShippingCharge;
   const totalPrice = subtotal;
   const finalTotal = subtotal + shippingCharge;
+  const isBelowMinimumOrder = finalTotal < MIN_ORDER_TOTAL;
 
   async function handleCheckOut() {
     if (!isFormValid) {
@@ -83,6 +89,13 @@ export default function CustomerInformation() {
 
     if (isCartEmpty) {
       toast.error("Your cart is empty");
+      return;
+    }
+
+    if (isBelowMinimumOrder) {
+      toast.error(
+        `${MIN_ORDER_TOTAL_MESSAGE}. ${getMinOrderRemainingMessage(finalTotal)}`,
+      );
       return;
     }
 
@@ -320,21 +333,40 @@ export default function CustomerInformation() {
             )}
           </div>
 
+          {isBelowMinimumOrder && (
+            <div
+              className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-orange-200"
+              role="alert"
+            >
+              <IconAlertCircle className="h-4 w-4 text-orange-600" />
+              <p className="text-sm text-orange-600">
+                {MIN_ORDER_TOTAL_MESSAGE}.{" "}
+                {getMinOrderRemainingMessage(finalTotal)}
+              </p>
+            </div>
+          )}
+
           <ActionButton
             className="w-full"
             size="lg"
             action={handleCheckOut}
-            disabled={!isFormValid || isCartEmpty}
-            aria-label={!isFormValid || isCartEmpty ?
-              "Complete all required fields to place order" :
-              `Place order for ${finalTotal} Bangladeshi Taka`}
+            disabled={!isFormValid || isCartEmpty || isBelowMinimumOrder}
+            aria-label={
+              !isFormValid || isCartEmpty || isBelowMinimumOrder
+                ? isBelowMinimumOrder
+                  ? `${MIN_ORDER_TOTAL_MESSAGE}. ${getMinOrderRemainingMessage(finalTotal)}`
+                  : "Complete all required fields to place order"
+                : `Place order for ${finalTotal} Bangladeshi Taka`
+            }
           >
             <IconShoppingBag className="h-4 w-4 mr-2" aria-hidden="true" />
             <span aria-hidden="true">Place Order • ৳{finalTotal}</span>
             <span className="sr-only">
-              {!isFormValid || isCartEmpty ?
-                "Complete all required fields to place order" :
-                `Place order for ${finalTotal} Bangladeshi Taka`}
+              {!isFormValid || isCartEmpty || isBelowMinimumOrder
+                ? isBelowMinimumOrder
+                  ? `${MIN_ORDER_TOTAL_MESSAGE}. ${getMinOrderRemainingMessage(finalTotal)}`
+                  : "Complete all required fields to place order"
+                : `Place order for ${finalTotal} Bangladeshi Taka`}
             </span>
           </ActionButton>
         </div>

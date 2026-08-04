@@ -4,6 +4,7 @@ import {
   createOrEditOrderSchema,
   customerDetailsInOrderSchema,
 } from "../../types/orderTypes";
+import { MIN_ORDER_TOTAL, MIN_ORDER_TOTAL_MESSAGE } from "../../constants";
 
 export const createOrderServer = createServerFn({
   method: "POST",
@@ -84,6 +85,12 @@ export const createOrderServer = createServerFn({
 
     // Add shipping to the backend-calculated total
     calculatedTotalPrice += finalShippingCharge;
+
+    // Enforce minimum order total for customer checkout from landing pages
+    // (admin-created orders do not send a landingPageId and are exempt)
+    if (data.landingPageId && calculatedTotalPrice < MIN_ORDER_TOTAL) {
+      throw new Error(MIN_ORDER_TOTAL_MESSAGE);
+    }
 
     // 3. Perform the Transaction
     // Prisma handles of "Foreign Key" linking automatically via nested 'create'

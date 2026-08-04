@@ -19,6 +19,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
 import { Item, ItemContent } from "@/components/ui/item";
+import {
+  MIN_ORDER_TOTAL,
+  MIN_ORDER_TOTAL_MESSAGE,
+  getMinOrderRemainingMessage,
+} from "@/features/orders/constants";
 import React from "react";
 
 export default function OrderSummary() {
@@ -39,6 +44,7 @@ export default function OrderSummary() {
   );
   const finalShippingCharge = isFreeShipping ? 0 : shippingCharge;
   const total = subtotal + finalShippingCharge;
+  const isBelowMinimumOrder = total < MIN_ORDER_TOTAL;
 
   return (
     <section className="space-y-6">
@@ -160,6 +166,19 @@ export default function OrderSummary() {
                 <span aria-hidden="true">৳{total}</span>
               </span>
             </div>
+            {isBelowMinimumOrder && (
+              <Item variant="muted" className="bg-orange-100" role="status" aria-live="polite">
+                <ItemContent className="font-semibold text-orange-700">
+                  <span aria-hidden="true">
+                    {MIN_ORDER_TOTAL_MESSAGE}. {getMinOrderRemainingMessage(total)}
+                  </span>
+                  <span className="sr-only">
+                    Minimum order total is {MIN_ORDER_TOTAL} Bangladeshi Taka.
+                    Add {MIN_ORDER_TOTAL - total} Bangladeshi Taka more to proceed.
+                  </span>
+                </ItemContent>
+              </Item>
+            )}
           </div>
         </CardContent>
       </Card>
