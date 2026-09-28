@@ -1,10 +1,11 @@
 import { CarouselApi } from "@/components/ui/carousel";
-import { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import Footer from "./Footer";
 import { useLandingPage } from "../contexts/LandingPageContext";
 import { useLandingPageOffer } from "../hooks/useLandingPageOffer";
 import { Marquee } from "@/components/ui/saw/marquee";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Item, ItemContent } from "@/components/ui/item";
 
 // Lazy load components that are not needed immediately
 const ProductsCarousel = lazy(() => import("./ProductsCarousel"));
@@ -78,8 +79,20 @@ function RelatedProductsSkeleton() {
 
 export default function LandingPageWrapper() {
   const [api, setApi] = useState<CarouselApi>();
-  const { productsNotPresentInCart } = useLandingPage();
-  const { offer } = useLandingPageOffer();
+  const { productsNotPresentInCart, cartItems } = useLandingPage();
+  const { offer, isThresholdMet } = useLandingPageOffer();
+  const subtotal = React.useMemo(
+    () =>
+      cartItems.reduce(
+        (acc, item) => acc + item.quantity * item.product.sellPrice,
+        0,
+      ),
+    [cartItems],
+  );
+  const isFreeShipping = React.useMemo(
+    () => isThresholdMet(subtotal),
+    [isThresholdMet, subtotal],
+  );
 
   return (
     <>
@@ -101,6 +114,34 @@ export default function LandingPageWrapper() {
                 <RelatedProducts api={api} />
               </Suspense>
             )}
+            {!isFreeShipping &&
+              offer &&
+              offer.type === "FREE_SHIPPING" &&
+              offer.threshold && (
+                <Item
+                  variant="muted"
+                  className="bg-green-700 text-white mx-4"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <ItemContent className="font-medium">
+                    <span aria-hidden="true">
+                      আর ৳
+                      {new Intl.NumberFormat("bn-BD").format(
+                        offer.threshold - subtotal,
+                      )}{" "}
+                      মূল্যের অর্ডার করলেই পাচ্ছেন ফ্রী শিপিং!
+                    </span>
+                    <span className="sr-only">
+                      Add{" "}
+                      {new Intl.NumberFormat("bn-BD").format(
+                        offer.threshold - subtotal,
+                      )}{" "}
+                      Bangladeshi Taka more to qualify for free shipping
+                    </span>
+                  </ItemContent>
+                </Item>
+              )}
             <div className="space-y-12 grid grid-cols-1 lg:grid-cols-3 gap-5">
               <Suspense fallback={<LandingPageCartSkeleton />}>
                 <LandingPageCart />

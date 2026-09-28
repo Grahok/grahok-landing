@@ -138,19 +138,6 @@ export default function OrderSummary() {
                 </div>
               </div>
             )}
-            {!isFreeShipping &&
-              offer &&
-              offer.type === "FREE_SHIPPING" &&
-              offer.threshold && (
-                <Item variant="muted" className="bg-green-700" role="status" aria-live="polite">
-                  <ItemContent className="font-semibold">
-                    <span aria-hidden="true">Add ৳{offer.threshold - subtotal} more for free shipping!</span>
-                    <span className="sr-only">
-                      Add {offer.threshold - subtotal} Bangladeshi Taka more to qualify for free shipping
-                    </span>
-                  </ItemContent>
-                </Item>
-              )}
             {(!offer || offer.type !== "FREE_SHIPPING") && (
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
