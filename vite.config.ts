@@ -10,14 +10,16 @@ import { nitro } from "nitro/vite";
 
 const config = defineConfig({
   resolve: {
-    alias: { 
+    alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
-    },   
+    },
   },
   plugins: [
     devtools(),
     nitro({
-      preset: "vercel",
+      config: {
+        preset: "vercel",
+      },
     }),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
